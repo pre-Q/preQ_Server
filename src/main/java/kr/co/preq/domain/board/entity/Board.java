@@ -1,7 +1,7 @@
 package kr.co.preq.domain.board.entity;
 
 import kr.co.preq.domain.comment.entity.Comment;
-import kr.co.preq.domain.user.entity.Users;
+import kr.co.preq.domain.user.entity.Member;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,11 +30,11 @@ public class Board extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users users;   // 게시글 작성자
+    private Member member;   // 게시글 작성자
 
     @Builder
-    public Board(Users users, String title, String content) {
-        this.users = users;
+    public Board(Member member, String title, String content) {
+        this.member = member;
         this.title = title;
         this.content = content;
     }
