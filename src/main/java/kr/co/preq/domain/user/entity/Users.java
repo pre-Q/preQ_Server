@@ -1,3 +1,4 @@
+
 package kr.co.preq.domain.user.entity;
 
 import javax.persistence.*;
