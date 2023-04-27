@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -27,8 +28,8 @@ public abstract class BaseEntity {
 	@Getter
 	private Long id;
 
-	@Column(name = "created_time", updatable = false, nullable = false)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "created_date", updatable = false, nullable = false)
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@CreatedDate
 	@Getter
 	private LocalDateTime createdTime;
