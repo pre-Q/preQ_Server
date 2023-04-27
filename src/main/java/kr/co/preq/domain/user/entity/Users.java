@@ -1,13 +1,17 @@
 package kr.co.preq.domain.user.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import kr.co.preq.domain.board.entity.Board;
+import kr.co.preq.domain.comment.entity.Comment;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,9 +25,15 @@ public class Users extends BaseEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	@OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)  // 유저 삭제하면 게시글도 자동 삭제
+	private List<Board> boardList;
+
+	@OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+	private List<Comment> commentList;
+
 	// public static User createMember(String name, String idCardImageUrl, String email, String password,
 	// 	Authority authority) {
-	// 	Member member = new Member();
+	// 	Member member = new Member();제
 	// 	member.name = name;
 	// 	member.idCardImageUrl = idCardImageUrl;
 	// 	member.email = email;
