@@ -1,4 +1,4 @@
-package kr.co.preq.domain.user.entity;
+package kr.co.preq.domain.member.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

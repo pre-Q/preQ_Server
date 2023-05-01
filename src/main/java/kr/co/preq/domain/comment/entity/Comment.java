@@ -1,7 +1,7 @@
 package kr.co.preq.domain.comment.entity;
 
 import kr.co.preq.domain.board.entity.Board;
-import kr.co.preq.domain.user.entity.Users;
+import kr.co.preq.domain.member.entity.Users;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
