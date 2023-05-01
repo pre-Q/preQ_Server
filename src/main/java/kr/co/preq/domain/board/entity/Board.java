@@ -29,7 +29,7 @@ public class Board extends BaseEntity {
     private List<Comment> commentList;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private Member member;   // 게시글 작성자
 
     @Builder
@@ -38,4 +38,5 @@ public class Board extends BaseEntity {
         this.title = title;
         this.content = content;
     }
+
 }

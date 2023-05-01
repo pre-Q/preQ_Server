@@ -1,10 +1,16 @@
 package kr.co.preq.domain.board.dto;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class BoardResponseDto {
-    private Integer id;
+    @JsonProperty("id")
+    private Long id;
+
+    @Builder
+    public BoardResponseDto(Long id) {
+        this.id = id;
+    }
 }
