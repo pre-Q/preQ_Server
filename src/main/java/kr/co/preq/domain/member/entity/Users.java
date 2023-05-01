@@ -1,5 +1,5 @@
 
-package kr.co.preq.domain.user.entity;
+package kr.co.preq.domain.member.entity;
 
 import javax.persistence.*;
 
@@ -7,11 +7,9 @@ import kr.co.preq.domain.board.entity.Board;
 import kr.co.preq.domain.comment.entity.Comment;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
