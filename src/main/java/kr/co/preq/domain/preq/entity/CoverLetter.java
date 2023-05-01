@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 import org.springframework.util.Assert;
 
-import kr.co.preq.domain.user.entity.Member;
+import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
