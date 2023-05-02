@@ -27,8 +27,9 @@ public enum SuccessCode {
 	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
 
 	/* 201 CREATED */
-	COMMENT_CREATE_SUCCESS(OK, "댓글 생성 성공"),
-	ARTICLE_CREATE_SUCCESS(OK, "게시물 생성 성공");
+	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),
+	COMMENT_CREATE_SUCCESS(CREATED, "댓글 생성 성공"),
+	ARTICLE_CREATE_SUCCESS(CREATED, "게시물 생성 성공");
 
 	private final HttpStatus status;
 	private final String message;
