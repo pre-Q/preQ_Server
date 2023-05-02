@@ -1,7 +1,7 @@
-package kr.co.preq.domain.user.service;
+package kr.co.preq.domain.member.service;
 
-import kr.co.preq.domain.user.entity.Member;
-import kr.co.preq.domain.user.repository.MemberRepository;
+import kr.co.preq.domain.member.entity.Member;
+import kr.co.preq.domain.member.repository.MemberRepository;
 import kr.co.preq.global.common.util.exception.NotFoundException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;

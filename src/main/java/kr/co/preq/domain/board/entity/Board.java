@@ -1,7 +1,7 @@
 package kr.co.preq.domain.board.entity;
 
 import kr.co.preq.domain.comment.entity.Comment;
-import kr.co.preq.domain.user.entity.Member;
+import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -38,5 +38,4 @@ public class Board extends BaseEntity {
         this.title = title;
         this.content = content;
     }
-
 }

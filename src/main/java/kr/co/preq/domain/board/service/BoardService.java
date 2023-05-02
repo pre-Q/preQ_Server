@@ -4,9 +4,9 @@ import kr.co.preq.domain.board.dto.BoardCreateRequestDto;
 import kr.co.preq.domain.board.dto.BoardResponseDto;
 import kr.co.preq.domain.board.entity.Board;
 import kr.co.preq.domain.board.repository.BoardRepository;
-import kr.co.preq.domain.user.entity.Member;
+import kr.co.preq.domain.member.entity.Member;
 
-import kr.co.preq.domain.user.service.MemberService;
+import kr.co.preq.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
