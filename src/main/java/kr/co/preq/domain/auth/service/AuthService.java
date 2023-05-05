@@ -77,7 +77,7 @@ public class AuthService {
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		body.add("property_keys", "[\"kakao_account.name\", \"kakao_account.email\"]");
+		body.add("property_keys", "[\"kakao_account.profile.nickname\", \"kakao_account.email\"]");
 
 		HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(body, headers);
 		RestTemplate restTemplate = new RestTemplate();
@@ -93,8 +93,7 @@ public class AuthService {
 		JsonNode jsonNode = objectMapper.readTree(responseBody);
 		System.out.println(jsonNode);
 
-		// String name = jsonNode.get("kakao_account").get("name").asText();
-		String name = "이효원";
+		String name = jsonNode.get("kakao_account").get("profile").get("nickname").asText();
 		String email = jsonNode.get("kakao_account").get("email").asText();
 
 		return new MemberRequestDto(name, email);
