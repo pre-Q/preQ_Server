@@ -32,6 +32,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
 
+	private final KaKaoAuthService kaKaoAuthService;
+	private final GoogleAuthService googleAuthService;
 	private final MemberRepository memberRepository;
 	private final TokenProvider tokenProvider;
 	// private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -42,10 +44,10 @@ public class AuthService {
 		MemberRequestDto memberRequestDto = new MemberRequestDto();
 		try {
 			if ("kakao".equals(requestDto.getType())) {
-				memberRequestDto = kakaoLogin(requestDto.getAccessToken());
+				memberRequestDto = kaKaoAuthService.kakaoLogin(requestDto.getAccessToken());
 			}
 			else if ("google".equals(requestDto.getType())) {
-				memberRequestDto = googleLogin(requestDto.getAccessToken());
+				memberRequestDto = googleAuthService.googleLogin(requestDto.getAccessToken());
 			}
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
@@ -69,59 +71,6 @@ public class AuthService {
 		TokenDto tokenDto = tokenProvider.generateTokenDto(member.getEmail(), member.getName());
 
 		return AuthResponseDto.from(tokenDto, member);
-	}
-
-	private MemberRequestDto kakaoLogin(String kakaoToken) throws JsonProcessingException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + kakaoToken);
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		body.add("property_keys", "[\"kakao_account.profile.nickname\", \"kakao_account.email\"]");
-
-		HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(body, headers);
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(
-			"https://kapi.kakao.com/v2/user/me",
-			HttpMethod.POST,
-			kakaoUserInfoRequest,
-			String.class
-		);
-
-		String responseBody = response.getBody();
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode jsonNode = objectMapper.readTree(responseBody);
-		System.out.println(jsonNode);
-
-		String name = jsonNode.get("kakao_account").get("profile").get("nickname").asText();
-		String email = jsonNode.get("kakao_account").get("email").asText();
-
-		return new MemberRequestDto(name, email);
-	}
-
-	private MemberRequestDto googleLogin(String googleToken) throws JsonProcessingException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + googleToken);
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-		HttpEntity<MultiValueMap<String, String>> googleUserInfoRequest = new HttpEntity<>(headers);
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(
-			"https://www.googleapis.com/oauth2/v1/userinfo",
-			HttpMethod.GET,
-			googleUserInfoRequest,
-			String.class
-		);
-
-		String responseBody = response.getBody();
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode jsonNode = objectMapper.readTree(responseBody);
-
-		String name = jsonNode.get("name").asText();
-		String email = jsonNode.get("email").asText();
-
-		return new MemberRequestDto(name, email);
-
 	}
 
 	@Transactional(readOnly = true)
