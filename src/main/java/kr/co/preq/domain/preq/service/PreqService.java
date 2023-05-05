@@ -1,8 +1,5 @@
 package kr.co.preq.domain.preq.service;
 
-import java.util.Optional;
-
-import kr.co.preq.domain.auth.service.AuthService;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
@@ -10,8 +7,6 @@ import kr.co.preq.domain.member.repository.MemberRepository;
 import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
 import kr.co.preq.domain.preq.dto.CoverLetterResponseDto;
-import kr.co.preq.domain.preq.dto.PreqRequestDto;
-import kr.co.preq.domain.preq.dto.PreqResponseDto;
 import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
