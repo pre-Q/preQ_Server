@@ -13,13 +13,15 @@ import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-	private AuthService authService;
+	private final AuthService authService;
 
 	@PostMapping("/login")
 	public ApiResponse<AuthResponseDto> login(@RequestBody @Valid AuthRequestDto requestDto) {
