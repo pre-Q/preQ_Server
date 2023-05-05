@@ -68,7 +68,7 @@ public class TokenProvider {
 	public Authentication getAuthentication(String accessToken) {
 		Claims claims = parseClaims(accessToken);
 
-		if (claims.get(TokenInfo.AUTHORITIES_KEY) == null) {
+		if (claims.get("nickname") == null) {
 			throw new IllegalArgumentException("권한 정보가 없는 토큰입니다.");
 		}
 

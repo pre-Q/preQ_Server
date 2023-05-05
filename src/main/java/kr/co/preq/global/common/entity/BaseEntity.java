@@ -25,11 +25,11 @@ public abstract class BaseEntity {
 	@Getter
 	private Long id;
 
-	@Column(name = "created_date", updatable = false, nullable = false)
+	@Column(name = "created_at", updatable = false, nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
 	@Getter
-	private LocalDateTime createdDate;
+	private LocalDateTime createdAt;
 
 	@Column(name = "is_deleted")
 	@Getter
