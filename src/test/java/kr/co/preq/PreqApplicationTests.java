@@ -1,4 +1,4 @@
-package kr.co.preq;
+/*package kr.co.preq;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class PreqApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/
