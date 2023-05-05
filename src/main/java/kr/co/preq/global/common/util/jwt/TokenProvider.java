@@ -38,24 +38,26 @@ public class TokenProvider {
 		// this.redisUtil = redisUtil;
 	}
 
-	public TokenDto generateTokenDto(Authentication authentication) {
-		String authorities = authentication.getAuthorities().stream()
-			.map(GrantedAuthority::getAuthority)
-			.collect(Collectors.joining(","));
+	public TokenDto generateTokenDto(String email, String name) {
+		// String authorities = authentication.getAuthorities().stream()
+		// 	.map(GrantedAuthority::getAuthority)
+		// 	.collect(Collectors.joining(","));
 
 		long now = (new Date()).getTime();
 		Date accessTokenExpiration = new Date(now + TokenInfo.ACCESS_TOKEN_EXPIRE_TIME);
 		String accessToken = Jwts.builder()
-			.setSubject(authentication.getName())
-			.claim(TokenInfo.AUTHORITIES_KEY, authorities)
+			.setSubject(email)
+			.claim("nickname", name)
+			// .claim(TokenInfo.AUTHORITIES_KEY, authorities)
 			.setExpiration(accessTokenExpiration)
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
 
 		Date refreshTokenExpiration = new Date(now + TokenInfo.REFRESH_TOKEN_EXPIRE_TIME);
 		String refreshToken = Jwts.builder()
-			.setSubject(authentication.getName())
-			.claim(TokenInfo.AUTHORITIES_KEY, authorities)
+			.setSubject(email)
+			.claim("nickname", name)
+			// .claim(TokenInfo.AUTHORITIES_KEY, authorities)
 			.setExpiration(refreshTokenExpiration)
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
@@ -70,14 +72,14 @@ public class TokenProvider {
 			throw new IllegalArgumentException("권한 정보가 없는 토큰입니다.");
 		}
 
-		Collection<? extends GrantedAuthority> authorities =
-			Arrays.stream(claims.get(TokenInfo.AUTHORITIES_KEY).toString().split(","))
+		Collection<? extends GrantedAuthority> name =
+			Arrays.stream(claims.get("nickname").toString().split(","))
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
 
-		UserDetails principal = new User(claims.getSubject(), "", authorities);
+		UserDetails principal = new User(claims.getSubject(), "", name);
 
-		return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
+		return new UsernamePasswordAuthenticationToken(principal, accessToken, name);
 	}
 
 	public boolean validateToken(String token) {
