@@ -27,7 +27,11 @@ public enum ErrorCode {
 
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	FILE_UPLOAD_FAIL(INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다."),
-	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");
+	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다."),
+
+	// Board
+	BOARD_POST_FAIL(BAD_REQUEST, "제목 또는 본문이 없거나 제목은 최대 100자여야 합니다.");
+
 
 	private final HttpStatus status;
 	private final String message;

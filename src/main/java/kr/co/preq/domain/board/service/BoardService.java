@@ -7,6 +7,8 @@ import kr.co.preq.domain.board.repository.BoardRepository;
 import kr.co.preq.domain.member.entity.Member;
 
 import kr.co.preq.domain.member.service.MemberService;
+import kr.co.preq.global.common.util.exception.CustomException;
+import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
