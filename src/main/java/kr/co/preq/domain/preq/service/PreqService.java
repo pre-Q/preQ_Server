@@ -1,19 +1,20 @@
 package kr.co.preq.domain.preq.service;
 
 import kr.co.preq.domain.member.service.MemberService;
-import kr.co.preq.domain.preq.dto.PreqResponseDto;
+import kr.co.preq.domain.preq.ChatGptConfig;
+import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
-import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
-import kr.co.preq.domain.preq.dto.CoverLetterResponseDto;
 import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
@@ -63,6 +64,38 @@ public class PreqService {
 	private CoverLetter findCoverLetterById(Long cletterId) {
 		return coverLetterRepository.findById(cletterId)
 				.orElseThrow(() -> new CustomException(ErrorCode.NO_ID));
+	}
+
+	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+
+	public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
+		headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+		return new HttpEntity<>(requestDto, headers);
+	}
+
+	public ChatGptResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity) {
+		ResponseEntity<ChatGptResponseDto> responseEntity = restTemplate.postForEntity(
+				ChatGptConfig.URL,
+				chatGptRequestDtoHttpEntity,
+				ChatGptResponseDto.class);
+
+		return responseEntity.getBody();
+	}
+
+	public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
+		return this.getResponse(
+				this.buildHttpEntity(
+						new ChatGptRequestDto(
+								ChatGptConfig.MODEL,
+								requestDto.getQuestion()
+								//ChatGptConfig.MAX_TOKEN,
+								//ChatGptConfig.TEMPERATURE,
+								//ChatGptConfig.TOP_P
+						)
+				)
+		);
 	}
 
 }

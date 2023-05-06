@@ -8,13 +8,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class Choice {
-    private String text;
     private Integer index;
     private Message message;
 
     @Builder
-    public Choice(String text, Integer index, Message message) {
-        this.text = text;
+    public Choice(Integer index, Message message) {
         this.index = index;
         this.message = message;
     }
