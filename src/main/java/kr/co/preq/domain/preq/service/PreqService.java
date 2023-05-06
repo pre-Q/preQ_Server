@@ -5,6 +5,10 @@ import kr.co.preq.domain.preq.dto.PreqResponseDto;
 import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
@@ -14,8 +18,11 @@ import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -57,4 +64,5 @@ public class PreqService {
 		return coverLetterRepository.findById(cletterId)
 				.orElseThrow(() -> new CustomException(ErrorCode.NO_ID));
 	}
+
 }
