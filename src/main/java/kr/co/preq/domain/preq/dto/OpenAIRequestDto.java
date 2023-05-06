@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChatGptRequestDto implements Serializable {
+public class OpenAIRequestDto implements Serializable {
     private String model;
     //private String prompt;
     @JsonProperty("max_tokens")
@@ -25,7 +25,7 @@ public class ChatGptRequestDto implements Serializable {
     private List<Message> messages;
 
     @Builder
-    public ChatGptRequestDto(String model, Integer n, String prompt) {
+    public OpenAIRequestDto(String model, Integer n, String prompt) {
         this.model = model;
         this.n = n;
         //this.prompt = prompt;

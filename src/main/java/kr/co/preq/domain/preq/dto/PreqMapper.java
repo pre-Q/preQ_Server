@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PreqMapper {
-    public PreqResult toResponseDto(Preq preq) {
+    public PreqResponseDto toResponseDto(Preq preq) {
         if (preq == null) return null;
 
-        PreqResult.PreqResultBuilder preqResponseDto = PreqResult.builder();
+        PreqResponseDto.PreqResponseDtoBuilder preqResponseDto = PreqResponseDto.builder();
         preqResponseDto.id(preq.getId());
         preqResponseDto.question(preq.getQuestion());
 

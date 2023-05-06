@@ -29,8 +29,8 @@ public class PreqController {
 	}
 
 	@GetMapping("/{cletterId}")
-	public ApiResponse<List<PreqResult>> sendQuestion(@PathVariable Long cletterId) {
-		List<PreqResult> responseDto = preqService.askQuestion(cletterId);
+	public ApiResponse<List<PreqResponseDto>> sendQuestion(@PathVariable Long cletterId) {
+		List<PreqResponseDto> responseDto = preqService.askQuestion(cletterId);
 
 		return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
 	}

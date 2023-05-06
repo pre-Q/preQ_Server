@@ -1,27 +1,18 @@
 package kr.co.preq.domain.preq.dto;
 
-import lombok.*;
-
-import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class PreqResponseDto {
+    private Long id;
     private String question;
-    private String id;
-
-    private String object;
-
-    private String model;
-    private List<Choice> choices;
 
     @Builder
-    public PreqResponseDto(String id, String object, String model,
-                           List<Choice> choices) {
+    public PreqResponseDto(Long id, String question) {
         this.id = id;
-        this.object = object;
-        this.model = model;
-        this.choices = choices;
+        this.question = question;
     }
 }

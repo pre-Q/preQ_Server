@@ -48,7 +48,7 @@ public class PreqService {
 		return coverLetterResponseDto;
 	}
 
-	public PreqResponseDto getPreq(Long cletterId) {
+	public OpenAIResponseDto getPreq(Long cletterId) {
 		Member member = memberService.findMember();
 
 		CoverLetter coverLetter = findCoverLetterById(cletterId);
@@ -68,31 +68,31 @@ public class PreqService {
 
 	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 
-	public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
+	public HttpEntity<OpenAIRequestDto> buildHttpEntity(OpenAIRequestDto requestDto) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
 		headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
 		return new HttpEntity<>(requestDto, headers);
 	}
 
-	public PreqResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity) {
-		ResponseEntity<PreqResponseDto> responseEntity = restTemplate.postForEntity(
+	public OpenAIResponseDto getResponse(HttpEntity<OpenAIRequestDto> chatGptRequestDtoHttpEntity) {
+		ResponseEntity<OpenAIResponseDto> responseEntity = restTemplate.postForEntity(
 				ChatGptConfig.URL,
 				chatGptRequestDtoHttpEntity,
-				PreqResponseDto.class);
+				OpenAIResponseDto.class);
 
 		return responseEntity.getBody();
 	}
 
-	public List<PreqResult> askQuestion(Long cletterId) {
+	public List<PreqResponseDto> askQuestion(Long cletterId) {
 		CoverLetter coverLetter = findCoverLetterById(cletterId);
 
 		String command = "너는 면접관이고, 지원자의 지원서를 보고 면접 질문을 하는 거야. 다음 지원서를 읽고 면접 질문을 한가지 추천해줘." + coverLetter.getAnswer();
 		System.out.println(command);
 
-		PreqResponseDto response = this.getResponse(
+		OpenAIResponseDto response = this.getResponse(
 				this.buildHttpEntity(
-						new ChatGptRequestDto(
+						new OpenAIRequestDto(
 								ChatGptConfig.MODEL,
 								ChatGptConfig.N,
 								command
@@ -117,11 +117,11 @@ public class PreqService {
 
 	}
 
-	public List<PreqResult> getPreqList(Long cletterId) {
+	public List<PreqResponseDto> getPreqList(Long cletterId) {
 
 		List<Preq> preqs = preqRepository.findPreqsByCoverLetterId(cletterId);
 
-		List<PreqResult> result = preqs.stream()
+		List<PreqResponseDto> result = preqs.stream()
 				.map(x -> preqMapper.toResponseDto(x))
 				.collect(Collectors.toList());
 		return result;
