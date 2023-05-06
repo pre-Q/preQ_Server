@@ -36,7 +36,7 @@ public class PreqController {
 	}
 
 	@PostMapping("/gpt")
-	public ChatGptResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto) {
+	public PreqResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto) {
 		return preqService.askQuestion(requestDto);
 	}
 }

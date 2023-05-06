@@ -3,10 +3,8 @@ package kr.co.preq.domain.preq.service;
 import kr.co.preq.domain.member.service.MemberService;
 import kr.co.preq.domain.preq.ChatGptConfig;
 import kr.co.preq.domain.preq.dto.*;
-import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,10 +18,6 @@ import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -75,16 +69,16 @@ public class PreqService {
 		return new HttpEntity<>(requestDto, headers);
 	}
 
-	public ChatGptResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity) {
-		ResponseEntity<ChatGptResponseDto> responseEntity = restTemplate.postForEntity(
+	public PreqResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity) {
+		ResponseEntity<PreqResponseDto> responseEntity = restTemplate.postForEntity(
 				ChatGptConfig.URL,
 				chatGptRequestDtoHttpEntity,
-				ChatGptResponseDto.class);
+				PreqResponseDto.class);
 
 		return responseEntity.getBody();
 	}
 
-	public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
+	public PreqResponseDto askQuestion(QuestionRequestDto requestDto) {
 		return this.getResponse(
 				this.buildHttpEntity(
 						new ChatGptRequestDto(

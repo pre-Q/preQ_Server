@@ -1,16 +1,30 @@
 package kr.co.preq.domain.preq.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.time.LocalDate;
+import java.util.List;
+
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class PreqResponseDto {
-    private Long id;
+    private String id;
     private String question;
 
+    private String object;
+    private LocalDate created;
+    private String model;
+    private List<Choice> choices;
+
     @Builder
-    public PreqResponseDto(Long id, String question) {
+    public PreqResponseDto(String id, String object, LocalDate created, String model,
+                           List<Choice> choices) {
         this.id = id;
-        this.question = question;
+        //this.question = question;
+        this.object = object;
+        this.created = created;
+        this.model = model;
+        this.choices = choices;
     }
 }
