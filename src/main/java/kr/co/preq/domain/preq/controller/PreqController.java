@@ -1,5 +1,7 @@
 package kr.co.preq.domain.preq.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +31,14 @@ public class PreqController {
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
 
+	@GetMapping("/list")
+	public ApiResponse<List<CoverLetterResponseDto>> getList() {
+		List<CoverLetterResponseDto> responseDtoList = preqService.getPreqList();
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, responseDtoList);
+	}
+
 	@GetMapping("/{cletterId}")
-	public ApiResponse<CoverLetterResponseDto> getPreq(@PathVariable Long cletterId) {
+	public ApiResponse<PreqResponseDto> getPreq(@PathVariable Long cletterId) {
 
 		PreqResponseDto responseDto = preqService.getPreq(cletterId);
 
