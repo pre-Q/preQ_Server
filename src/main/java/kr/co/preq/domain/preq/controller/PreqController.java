@@ -2,10 +2,7 @@ package kr.co.preq.domain.preq.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
 import kr.co.preq.domain.preq.dto.CoverLetterResponseDto;
@@ -24,10 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 public class PreqController {
 	private final PreqService preqService;
 
-	@PostMapping("/")
-	public ApiResponse<CoverLetterResponseDto> saveCoverLetter(@ModelAttribute @Valid CoverLetterRequestDto requestDto) {
+	@PostMapping()
+	public ApiResponse<CoverLetterResponseDto> saveCoverLetter(@RequestBody @Valid CoverLetterRequestDto requestDto) {
+
 		CoverLetterResponseDto responseDto = preqService.saveCoverLetter(requestDto);
+
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
-
 }

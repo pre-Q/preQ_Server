@@ -1,5 +1,7 @@
 package kr.co.preq.domain.preq.service;
 
+import kr.co.preq.domain.board.entity.Board;
+import kr.co.preq.domain.member.service.MemberService;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
@@ -18,14 +20,11 @@ public class PreqService {
 
 	private final PreqRepository preqRepository;
 	private final CoverLetterRepository coverLetterRepository;
-	private final MemberRepository memberRepository;	//TODO: delete
-	private final AuthService authService;
+	private final MemberService memberService;
 
 	public CoverLetterResponseDto saveCoverLetter(CoverLetterRequestDto requestDto) {
 
-		//TODO: find member and valid Logic
-
-		Member member = authService.findMember();
+		Member member = memberService.findMember();
 
 		CoverLetter coverLetter = CoverLetter.builder()
 			.member(member)
@@ -34,7 +33,7 @@ public class PreqService {
 			build();
 
 		coverLetterRepository.save(coverLetter);
-		CoverLetterResponseDto coverLetterResponseDto = new CoverLetterResponseDto(coverLetter.getQuestion(), coverLetter.getAnswer());
+		CoverLetterResponseDto coverLetterResponseDto = new CoverLetterResponseDto(coverLetter.getId(), member.getId(), coverLetter.getQuestion(), coverLetter.getAnswer());
 		return coverLetterResponseDto;
 	}
 }

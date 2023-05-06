@@ -27,7 +27,7 @@ public class CoverLetter extends BaseEntity {
 	@Column(nullable = false)
 	private String question;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String answer;
 
 	@Builder
@@ -40,5 +40,4 @@ public class CoverLetter extends BaseEntity {
 		this.question = question;
 		this.answer = answer;
 	}
-
 }
