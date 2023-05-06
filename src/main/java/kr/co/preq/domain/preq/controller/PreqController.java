@@ -28,6 +28,12 @@ public class PreqController {
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
 
+	@GetMapping("/list")
+	public ApiResponse<List<CoverLetterResponseDto>> getList() {
+		List<CoverLetterResponseDto> responseDtoList = preqService.getPreqList();
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, responseDtoList);
+	}
+
 	@GetMapping("/{cletterId}")
 	public ApiResponse<List<PreqResponseDto>> sendQuestion(@PathVariable Long cletterId) {
 		List<PreqResponseDto> responseDto = preqService.askQuestion(cletterId);
