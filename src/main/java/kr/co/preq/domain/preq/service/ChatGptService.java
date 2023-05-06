@@ -4,9 +4,7 @@ import kr.co.preq.domain.preq.ChatGptConfig;
 import kr.co.preq.domain.preq.dto.ChatGptRequestDto;
 import kr.co.preq.domain.preq.dto.ChatGptResponseDto;
 import kr.co.preq.domain.preq.dto.QuestionRequestDto;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,12 +14,6 @@ import org.springframework.web.client.RestTemplate;
 public class ChatGptService {
 
     RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
-    /*restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
-        public boolean hasError(ClientHttpResponse response) throws IOException {
-            HttpStatus statusCode = response.getStatusCode();
-            return statusCode.series() == HttpStatus.Series.SERVER_ERROR;
-        }
-    });*/
 
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
         HttpHeaders headers = new HttpHeaders();
@@ -44,10 +36,10 @@ public class ChatGptService {
                 this.buildHttpEntity(
                         new ChatGptRequestDto(
                                 ChatGptConfig.MODEL,
-                                requestDto.getQuestion(),
-                                ChatGptConfig.MAX_TOKEN,
-                                ChatGptConfig.TEMPERATURE,
-                                ChatGptConfig.TOP_P
+                                requestDto.getQuestion()
+                                //ChatGptConfig.MAX_TOKEN,
+                                //ChatGptConfig.TEMPERATURE,
+                                //ChatGptConfig.TOP_P
                         )
                 )
         );

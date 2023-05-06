@@ -11,8 +11,8 @@ public class Message {
     private String role;
     private String content;
 
-    public Message(String user, String prompt) {
-        this.role = user;
-        this.content = prompt;
+    public Message(String role, String content) {
+        this.role = role;
+        this.content = content;
     }
 }

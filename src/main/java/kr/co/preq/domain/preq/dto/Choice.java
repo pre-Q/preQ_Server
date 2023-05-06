@@ -10,13 +10,12 @@ import lombok.NoArgsConstructor;
 public class Choice {
     private String text;
     private Integer index;
-    @JsonProperty("finish_reason")
-    private String finishReason;
+    private Message message;
 
     @Builder
-    public Choice(String text, Integer index, String finishReason) {
+    public Choice(String text, Integer index, Message message) {
         this.text = text;
         this.index = index;
-        this.finishReason = finishReason;
+        this.message = message;
     }
 }
