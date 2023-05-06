@@ -1,20 +1,17 @@
 package kr.co.preq.domain.preq.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import kr.co.preq.domain.preq.dto.*;
 import org.springframework.web.bind.annotation.*;
 
-import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
-import kr.co.preq.domain.preq.dto.CoverLetterResponseDto;
-import kr.co.preq.domain.preq.dto.PreqRequestDto;
-import kr.co.preq.domain.preq.dto.PreqResponseDto;
 import kr.co.preq.domain.preq.service.PreqService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,9 +35,8 @@ public class PreqController {
 	}
 
 	@GetMapping("/{cletterId}")
-	public ApiResponse<PreqResponseDto> getPreq(@PathVariable Long cletterId) {
-
-		PreqResponseDto responseDto = preqService.getPreq(cletterId);
+	public ApiResponse<List<PreqResponseDto>> sendQuestion(@PathVariable Long cletterId) {
+		List<PreqResponseDto> responseDto = preqService.askQuestion(cletterId);
 
 		return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
 	}

@@ -24,10 +24,10 @@ public class CoverLetter extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Member member;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String question;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String answer;
 
 	@Builder

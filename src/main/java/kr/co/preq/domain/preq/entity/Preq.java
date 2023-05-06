@@ -23,7 +23,7 @@ public class Preq extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private CoverLetter coverLetter;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String question;
 
 	@Builder

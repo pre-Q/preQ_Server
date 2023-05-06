@@ -1,7 +1,5 @@
 package kr.co.preq.domain.preq.dto;
 
-import javax.validation.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
