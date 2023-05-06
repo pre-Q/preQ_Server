@@ -29,7 +29,8 @@ public enum SuccessCode {
 	/* 201 CREATED */
 	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),
 	COMMENT_CREATE_SUCCESS(CREATED, "댓글 생성 성공"),
-	ARTICLE_CREATE_SUCCESS(CREATED, "게시물 생성 성공");
+	ARTICLE_CREATE_SUCCESS(CREATED, "게시물 생성 성공"),
+	PREQ_GET_SUCCESS(CREATED, "예상 면접 질문 조회 성공");
 
 	private final HttpStatus status;
 	private final String message;
