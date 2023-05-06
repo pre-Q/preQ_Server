@@ -24,6 +24,7 @@ public enum ErrorCode {
 	USER_NOT_FOUND(NOT_FOUND, "유저를 찾을 수 없습니다."),
 	TOKEN_NOT_FOUND(NOT_FOUND, "다시 로그인해주세요."),
 	PROFILE_NOT_FOUND(NOT_FOUND, "유저의 프로필 정보가 존재하지 않습니다."),
+	PREQ_NOT_FOUND(NOT_FOUND, "preQ를 찾을 수 없습니다."),
 
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	FILE_UPLOAD_FAIL(INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다."),
