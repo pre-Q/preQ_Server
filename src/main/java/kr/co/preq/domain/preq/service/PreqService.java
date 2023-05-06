@@ -3,6 +3,7 @@ package kr.co.preq.domain.preq.service;
 import kr.co.preq.domain.member.service.MemberService;
 import kr.co.preq.domain.preq.ChatGptConfig;
 import kr.co.preq.domain.preq.dto.*;
+import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import org.springframework.http.HttpEntity;
@@ -19,6 +20,9 @@ import kr.co.preq.domain.preq.repository.PreqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PreqService {
@@ -26,6 +30,8 @@ public class PreqService {
 	private final PreqRepository preqRepository;
 	private final CoverLetterRepository coverLetterRepository;
 	private final MemberService memberService;
+
+	private final PreqMapper preqMapper;
 
 	public CoverLetterResponseDto saveCoverLetter(CoverLetterRequestDto requestDto) {
 
@@ -78,18 +84,47 @@ public class PreqService {
 		return responseEntity.getBody();
 	}
 
-	public PreqResponseDto askQuestion(QuestionRequestDto requestDto) {
-		return this.getResponse(
+	public List<PreqResult> askQuestion(Long cletterId) {
+		CoverLetter coverLetter = findCoverLetterById(cletterId);
+
+		String command = "너는 면접관이고, 지원자의 지원서를 보고 면접 질문을 하는 거야. 다음 지원서를 읽고 면접 질문을 한가지 추천해줘." + coverLetter.getAnswer();
+		System.out.println(command);
+
+		PreqResponseDto response = this.getResponse(
 				this.buildHttpEntity(
 						new ChatGptRequestDto(
 								ChatGptConfig.MODEL,
-								requestDto.getQuestion()
-								//ChatGptConfig.MAX_TOKEN,
-								//ChatGptConfig.TEMPERATURE,
-								//ChatGptConfig.TOP_P
+								ChatGptConfig.N,
+								command
 						)
 				)
 		);
+
+		List<Choice> preqLists = response.getChoices();
+
+		for (Choice preqList : preqLists) {
+			String ques = preqList.getMessage().getContent();
+
+			Preq preq = Preq.builder()
+					.question(ques)
+					.coverLetter(coverLetter).
+					build();
+
+			preqRepository.save(preq);
+		}
+
+		return getPreqList(cletterId);
+
+	}
+
+	public List<PreqResult> getPreqList(Long cletterId) {
+
+		List<Preq> preqs = preqRepository.findPreqsByCoverLetterId(cletterId);
+
+		List<PreqResult> result = preqs.stream()
+				.map(x -> preqMapper.toResponseDto(x))
+				.collect(Collectors.toList());
+		return result;
 	}
 
 }

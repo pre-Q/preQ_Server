@@ -11,6 +11,8 @@ import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/preq")
@@ -27,16 +29,9 @@ public class PreqController {
 	}
 
 	@GetMapping("/{cletterId}")
-	public ApiResponse<CoverLetterResponseDto> getPreq(@PathVariable Long cletterId) {
+	public ApiResponse<List<PreqResult>> sendQuestion(@PathVariable Long cletterId) {
+		List<PreqResult> responseDto = preqService.askQuestion(cletterId);
 
-		PreqResponseDto responseDto = preqService.getPreq(cletterId);
-
-		//return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
-		return null;
-	}
-
-	@PostMapping("/gpt")
-	public PreqResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto) {
-		return preqService.askQuestion(requestDto);
+		return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
 	}
 }

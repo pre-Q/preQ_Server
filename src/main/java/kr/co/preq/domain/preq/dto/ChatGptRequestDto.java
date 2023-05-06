@@ -18,17 +18,16 @@ public class ChatGptRequestDto implements Serializable {
     //private String prompt;
     @JsonProperty("max_tokens")
     private Integer maxTokens;
+    private Integer n;
     private Double temperature;
     @JsonProperty("top_p")
     private Double topP;
     private List<Message> messages;
 
-    //Integer maxTokens, //Double temperature,
-    //Double topP
-
     @Builder
-    public ChatGptRequestDto(String model, String prompt) {
+    public ChatGptRequestDto(String model, Integer n, String prompt) {
         this.model = model;
+        this.n = n;
         //this.prompt = prompt;
         //this.maxTokens = maxTokens;
         //this.temperature = temperature;
