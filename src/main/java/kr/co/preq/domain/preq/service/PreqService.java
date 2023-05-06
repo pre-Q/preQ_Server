@@ -41,7 +41,7 @@ public class PreqService {
 			build();
 
 		coverLetterRepository.save(coverLetter);
-		return new CoverLetterResponseDto(coverLetter.getId(), coverLetter.getQuestion(), coverLetter.getAnswer());
+		return coverLetterMapper.toResponseDto(coverLetter);
 	}
 
 	@Transactional(readOnly = true)
