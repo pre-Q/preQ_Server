@@ -20,6 +20,8 @@ import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -96,7 +98,8 @@ public class PreqService {
 	}
 
 	public List<PreqResponseDto> askQuestion(Long cletterId) {
-		CoverLetter coverLetter = findCoverLetterById(cletterId);
+		CoverLetter coverLetter = coverLetterRepository.findCoverLetterById(cletterId)
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID));
 
 		String command = "너는 면접관이고, 지원자의 지원서를 보고 면접 질문을 하는 거야. 다음 지원서를 읽고 면접 질문을 한가지 추천해줘." + coverLetter.getAnswer();
 		System.out.println(command);
