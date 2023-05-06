@@ -28,4 +28,12 @@ public class PreqController {
 
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
+
+	@GetMapping("/{cletterId}")
+	public ApiResponse<CoverLetterResponseDto> getPreq(@PathVariable Long cletterId) {
+
+		PreqResponseDto responseDto = preqService.getPreq(cletterId);
+
+		return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
+	}
 }
