@@ -12,9 +12,6 @@ env:
   CODE_DEPLOY_APPLICATION_NAME: preq-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: preq-codedeploy-deployment-group
   
-permissions:
-  contents: read
-
 jobs:
   deploy:
     name: Deploy
