@@ -3,11 +3,13 @@ package kr.co.preq.domain.preq.service;
 import kr.co.preq.domain.member.service.MemberService;
 import kr.co.preq.domain.preq.dto.CoverLetterMapper;
 import kr.co.preq.domain.preq.dto.PreqResponseDto;
-import kr.co.preq.domain.preq.ChatGptConfig;
+import kr.co.preq.domain.preq.OpenAiConfig;
 import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -81,16 +83,19 @@ public class PreqService {
 
 	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 
+	@Value("${openai.api.key}")
+	String API_KEY;
+
 	public HttpEntity<OpenAIRequestDto> buildHttpEntity(OpenAIRequestDto requestDto) {
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
-		headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+		headers.setContentType(MediaType.parseMediaType(OpenAiConfig.MEDIA_TYPE));
+		headers.add(OpenAiConfig.AUTHORIZATION, OpenAiConfig.BEARER + API_KEY);
 		return new HttpEntity<>(requestDto, headers);
 	}
 
 	public OpenAIResponseDto getResponse(HttpEntity<OpenAIRequestDto> chatGptRequestDtoHttpEntity) {
 		ResponseEntity<OpenAIResponseDto> responseEntity = restTemplate.postForEntity(
-				ChatGptConfig.URL,
+				OpenAiConfig.URL,
 				chatGptRequestDtoHttpEntity,
 				OpenAIResponseDto.class);
 
@@ -107,8 +112,8 @@ public class PreqService {
 		OpenAIResponseDto response = this.getResponse(
 				this.buildHttpEntity(
 						new OpenAIRequestDto(
-								ChatGptConfig.MODEL,
-								ChatGptConfig.N,
+								OpenAiConfig.MODEL,
+								OpenAiConfig.N,
 								command
 						)
 				)
