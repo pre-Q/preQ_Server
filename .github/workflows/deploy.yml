@@ -29,12 +29,24 @@ jobs:
         distribution: 'temurin'
         java-version: "11"
         
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*',
+          '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+          
     # YML 파일 생성
     - name: make main application.yml
       run: |
-        sudo mkdir -p ./wingle/src/main/resources
-        sudo chmod 777 ./wingle/src/main/resources
-        cd ./wingle/src/main/resources
+        sudo mkdir -p ./src/main/resources
+        sudo chmod 777 ./src/main/resources
+        cd ./src/main/resources
         touch ./application.yml
         echo "${{ secrets.MAIN_YML }}" > ./application.yml 
         
@@ -42,14 +54,13 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: application.yml
-        path: ./wingle/src/main/resources/application.yml
+        path: ./src/main/resources/application.yml
         if-no-files-found: 'error'
         
     # (3) Gradle build (Test 제외)
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        arguments: clean build -x test
+      run: ./gradlew clean build -x test
+      shell: bash
 
     # (4) AWS 인증
     - name: Configure AWS credentials
