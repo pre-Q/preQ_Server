@@ -64,7 +64,7 @@ jobs:
       shell: bash
       
     - name: AWS credential 설정
-      if: contains(github.ref, 'main')
+      if: contains(github.ref, 'develop')
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: ${{ env.AWS_REGION }}
@@ -72,7 +72,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         
     - name: Upload to AWS S3
-      if: contains(github.ref, 'main')
+      if: contains(github.ref, 'develop')
       run: |
        aws deploy push \
           --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
@@ -82,7 +82,7 @@ jobs:
           
     # S3 버킷에 있는 파일을 대상으로 CodeDeploy 실행
     - name: Deploy to AWS EC2 from S3
-      if: contains(github.ref, 'main')
+      if: contains(github.ref, 'develop')
       run: |
        aws deploy create-deployment \
           --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} \
