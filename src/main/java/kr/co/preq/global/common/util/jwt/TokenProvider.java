@@ -1,10 +1,13 @@
 package kr.co.preq.global.common.util.jwt;
 
 import java.security.Key;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +16,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,31 +29,29 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+// import kr.co.preq.global.common.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 public class TokenProvider {
 	private final Key key;
+	private final UserDetailsService userDetailsService;
 	// private final RedisUtil redisUtil;
 
-	public TokenProvider(@Value("${jwt.secret}") String secret) {
+	public TokenProvider(UserDetailsService userDetailsService, @Value("${jwt.secret}") String secret) {
 		byte[] keyBytes = Decoders.BASE64.decode(secret);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
+		this.userDetailsService = userDetailsService;
 		// this.redisUtil = redisUtil;
 	}
 
-	public TokenDto generateTokenDto(String email, String name) {
-		// String authorities = authentication.getAuthorities().stream()
-		// 	.map(GrantedAuthority::getAuthority)
-		// 	.collect(Collectors.joining(","));
+	public TokenDto generateTokenDto(String email) {
 
 		long now = (new Date()).getTime();
 		Date accessTokenExpiration = new Date(now + TokenInfo.ACCESS_TOKEN_EXPIRE_TIME);
 		String accessToken = Jwts.builder()
 			.setSubject(email)
-			.claim("nickname", name)
-			// .claim(TokenInfo.AUTHORITIES_KEY, authorities)
 			.setExpiration(accessTokenExpiration)
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
@@ -56,8 +59,6 @@ public class TokenProvider {
 		Date refreshTokenExpiration = new Date(now + TokenInfo.REFRESH_TOKEN_EXPIRE_TIME);
 		String refreshToken = Jwts.builder()
 			.setSubject(email)
-			.claim("nickname", name)
-			// .claim(TokenInfo.AUTHORITIES_KEY, authorities)
 			.setExpiration(refreshTokenExpiration)
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
@@ -68,18 +69,12 @@ public class TokenProvider {
 	public Authentication getAuthentication(String accessToken) {
 		Claims claims = parseClaims(accessToken);
 
-		if (claims.get("nickname") == null) {
+		if (claims.getSubject() == null) {
 			throw new IllegalArgumentException("권한 정보가 없는 토큰입니다.");
 		}
 
-		Collection<? extends GrantedAuthority> name =
-			Arrays.stream(claims.get("nickname").toString().split(","))
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-
-		UserDetails principal = new User(claims.getSubject(), "", name);
-
-		return new UsernamePasswordAuthenticationToken(principal, accessToken, name);
+		UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 
 	public boolean validateToken(String token) {
