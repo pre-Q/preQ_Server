@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.*;
@@ -34,6 +36,12 @@ public class Board extends BaseEntity {
 
     @Builder
     public Board(Member member, String title, String content) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+    }
+
+    public void updateBoard(Member member, String title, String content) {
         this.member = member;
         this.title = title;
         this.content = content;

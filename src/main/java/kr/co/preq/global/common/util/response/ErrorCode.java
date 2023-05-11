@@ -31,8 +31,8 @@ public enum ErrorCode {
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다."),
 
 	// Board
-	BOARD_POST_FAIL(BAD_REQUEST, "제목 또는 본문이 없거나 제목은 최대 100자여야 합니다.");
-
+	VIOLATE_BOARD_RULE(BAD_REQUEST, "제목 또는 본문이 없거나 제목은 최대 100자여야 합니다."),
+	BOARD_NOT_FOUND(NOT_FOUND, "게시글을 찾을 수 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;
