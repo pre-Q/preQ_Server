@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.preq.domain.member.dto.MemberRequestDto;
+import kr.co.preq.global.common.util.exception.CustomException;
+import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,31 +26,37 @@ import lombok.RequiredArgsConstructor;
 public class KaKaoAuthService {
 
 	@Transactional
-	public MemberRequestDto kakaoLogin(String kakaoToken) throws JsonProcessingException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + kakaoToken);
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	public MemberRequestDto kakaoLogin(String kakaoToken) {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authorization", "Bearer " + kakaoToken);
+			headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		body.add("property_keys", "[\"kakao_account.profile.nickname\", \"kakao_account.email\"]");
+			MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+			body.add("property_keys", "[\"kakao_account.profile.nickname\", \"kakao_account.email\"]");
 
-		HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(body, headers);
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(
-			"https://kapi.kakao.com/v2/user/me",
-			HttpMethod.POST,
-			kakaoUserInfoRequest,
-			String.class
-		);
+			HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(body, headers);
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> response = restTemplate.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.POST,
+				kakaoUserInfoRequest,
+				String.class
+			);
 
-		String responseBody = response.getBody();
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode jsonNode = objectMapper.readTree(responseBody);
-		System.out.println(jsonNode);
+			String responseBody = response.getBody();
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode jsonNode = objectMapper.readTree(responseBody);
+			System.out.println(jsonNode);
 
-		String name = jsonNode.get("kakao_account").get("profile").get("nickname").asText();
-		String email = jsonNode.get("kakao_account").get("email").asText();
+			String name = jsonNode.get("kakao_account").get("profile").get("nickname").asText();
+			String email = jsonNode.get("kakao_account").get("email").asText();
 
-		return new MemberRequestDto(name, email);
+			return new MemberRequestDto(name, email);
+		} catch (HttpClientErrorException e) {
+			throw new CustomException(ErrorCode.KAKAO_UNAUTHORIZED_USER);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

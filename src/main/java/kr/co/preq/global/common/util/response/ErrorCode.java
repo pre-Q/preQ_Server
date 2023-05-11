@@ -18,6 +18,8 @@ public enum ErrorCode {
 
 	/* 401 UNAUTHORIZED: 인증 실패 */
 	UNAUTHORIZED_USER(UNAUTHORIZED, "만료되었거나 잘못된 토큰입니다. 토큰을 확인해주세요."),
+	KAKAO_UNAUTHORIZED_USER(UNAUTHORIZED, "카카오 로그인 실패. 만료되었거나 잘못된 카카오 토큰입니다. 카카오 토큰을 확인해주세요."),
+	GOOGLE_UNAUTHORIZED_USER(UNAUTHORIZED, "구글 로그인 실패. 만료되었거나 잘못된 구글 토큰입니다. 구글 토큰을 확인해주세요."),
 
 	/* 404 NOT_FOUND: 리소스를 찾을 수 없음 */
 	DATA_NOT_FOUND(NOT_FOUND, "해당 데이터를 찾을 수 없습니다."),
