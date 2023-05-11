@@ -7,11 +7,12 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public class BoardCreateRequestDto {
+public class BoardRequestDto {
 
     @NotBlank
     @Size(max = 100)
     private String title;
+
     @NotBlank
     private String content;
 }
