@@ -23,6 +23,7 @@ public enum SuccessCode {
 
 	// 게시판
 	BOARD_POST_SUCCESS(CREATED, "글 작성 성공"),
+	BOARD_UPDATE_SUCCESS(OK, "글 수정 성공"),
 	ARTICLE_DELETE_SUCCESS(OK, "게시물 삭제 성공"),
 	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
 
