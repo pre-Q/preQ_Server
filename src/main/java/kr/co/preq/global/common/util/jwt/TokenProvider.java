@@ -29,7 +29,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-import kr.co.preq.global.common.util.RedisUtil;
+// import kr.co.preq.global.common.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
