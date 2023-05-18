@@ -30,6 +30,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 // import kr.co.preq.global.common.util.RedisUtil;
+import kr.co.preq.global.common.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,28 +38,28 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenProvider {
 	private final Key key;
 	private final UserDetailsService userDetailsService;
-	// private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-	public TokenProvider(UserDetailsService userDetailsService, @Value("${jwt.secret}") String secret) {
+	public TokenProvider(UserDetailsService userDetailsService, @Value("${jwt.secret}") String secret, RedisUtil redisUtil) {
 		byte[] keyBytes = Decoders.BASE64.decode(secret);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 		this.userDetailsService = userDetailsService;
-		// this.redisUtil = redisUtil;
+		this.redisUtil = redisUtil;
 	}
 
-	public TokenDto generateTokenDto(String email) {
+	public TokenDto generateTokenDto(Authentication authentication) {
 
 		long now = (new Date()).getTime();
 		Date accessTokenExpiration = new Date(now + TokenInfo.ACCESS_TOKEN_EXPIRE_TIME);
 		String accessToken = Jwts.builder()
-			.setSubject(email)
+			.setSubject(authentication.getName())
 			.setExpiration(accessTokenExpiration)
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
 
 		Date refreshTokenExpiration = new Date(now + TokenInfo.REFRESH_TOKEN_EXPIRE_TIME);
 		String refreshToken = Jwts.builder()
-			.setSubject(email)
+			.setSubject(authentication.getName())
 			.setExpiration(refreshTokenExpiration)
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
@@ -74,7 +75,7 @@ public class TokenProvider {
 		}
 
 		UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(userDetails, accessToken, userDetails.getAuthorities());
 	}
 
 	public boolean validateToken(String token) {

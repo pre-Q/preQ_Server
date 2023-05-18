@@ -6,8 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 
 import kr.co.preq.global.common.entity.BaseEntity;
@@ -37,6 +39,10 @@ public class Member extends BaseEntity implements UserDetails {
 		this.email = email;
 	}
 
+	public UsernamePasswordAuthenticationToken toAuthentication() {
+		return new UsernamePasswordAuthenticationToken(email, "pwd");
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -44,7 +50,8 @@ public class Member extends BaseEntity implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return null;
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return  encoder.encode("pwd");
 	}
 
 	@Override
@@ -54,21 +61,21 @@ public class Member extends BaseEntity implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return false;
+		return true;
 	}
 }

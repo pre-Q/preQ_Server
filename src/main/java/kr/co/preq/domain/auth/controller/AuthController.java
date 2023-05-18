@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.preq.domain.auth.dto.AuthRequestDto;
 import kr.co.preq.domain.auth.dto.AuthResponseDto;
+import kr.co.preq.domain.auth.dto.TokenRequestDto;
 import kr.co.preq.domain.auth.service.AuthService;
+import kr.co.preq.global.common.util.jwt.TokenDto;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +29,11 @@ public class AuthController {
 	public ApiResponse<AuthResponseDto> login(@RequestBody @Valid AuthRequestDto requestDto) {
 		AuthResponseDto responseDto = authService.login(requestDto);
 		return ApiResponse.success(SuccessCode.LOGIN_SUCCESS, responseDto);
+	}
+
+	@PostMapping("/refresh")
+	public ApiResponse<TokenDto> refresh(@RequestBody @Valid TokenRequestDto tokenRequestDto) {
+		TokenDto response = authService.reissue(tokenRequestDto);
+		return ApiResponse.success(SuccessCode.TOKEN_REISSUE_SUCCESS, response);
 	}
 }
