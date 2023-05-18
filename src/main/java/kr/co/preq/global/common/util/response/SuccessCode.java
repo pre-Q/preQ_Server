@@ -26,6 +26,7 @@ public enum SuccessCode {
 	BOARD_UPDATE_SUCCESS(OK, "글 수정 성공"),
 	ARTICLE_DELETE_SUCCESS(OK, "게시물 삭제 성공"),
 	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
+	GET_ALL_BOARD_SUCCESS(OK, "게시판 전체 조회 성공"),
 
 	/* 201 CREATED */
 	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),

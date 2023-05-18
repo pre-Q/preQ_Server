@@ -34,7 +34,8 @@ public enum ErrorCode {
 
 	// Board
 	VIOLATE_BOARD_RULE(BAD_REQUEST, "제목 또는 본문이 없거나 제목은 최대 100자여야 합니다."),
-	BOARD_NOT_FOUND(NOT_FOUND, "게시글을 찾을 수 없습니다.");
+	BOARD_NOT_FOUND(NOT_FOUND, "게시글을 찾을 수 없습니다."),
+	VIOLATE_FILTER_RULE(BAD_REQUEST, "필터 범위를 벗어났습니다.");
 
 	private final HttpStatus status;
 	private final String message;
