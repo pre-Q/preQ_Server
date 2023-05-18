@@ -7,8 +7,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.*;
@@ -17,6 +17,7 @@ import javax.persistence.*;
 @Table(name = "board")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
 public class Board extends BaseEntity {
 
     @Column(nullable = false, length = 100)
@@ -25,7 +26,8 @@ public class Board extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    private Integer views;
+    @Column(name = "views", columnDefinition = "integer default 0")
+    private Integer views = 0;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)  // 게시글 삭제하면 해당 댓글도 자동 삭제
     private List<Comment> commentList;

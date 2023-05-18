@@ -5,12 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class BoardResponseDto {
+public class BoardCreateResponseDto {
     @JsonProperty("id")
     private Long id;
 
     @Builder
-    public BoardResponseDto(Long id) {
+    public BoardCreateResponseDto(Long id) {
         this.id = id;
     }
 }
