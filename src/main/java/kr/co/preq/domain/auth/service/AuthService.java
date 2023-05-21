@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import kr.co.preq.domain.auth.dto.AuthRequestDto;
 import kr.co.preq.domain.auth.dto.AuthResponseDto;
+import kr.co.preq.domain.auth.dto.LogoutRequestDto;
 import kr.co.preq.domain.auth.dto.TokenRequestDto;
 import kr.co.preq.domain.member.dto.MemberRequestDto;
 import kr.co.preq.domain.member.entity.Member;
@@ -70,23 +71,22 @@ public class AuthService{
 		return AuthResponseDto.from(tokenDto, member);
 	}
 
-	private TokenDto getRedisTokenKey(Authentication authentication) {
-		TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-
-		String uuid = generateUUID();
-		String refreshTokenKey = RedisUtil.PREFIX_REFRESH_TOKEN + uuid;
-		while (redisUtil.getData(refreshTokenKey) != null) {
-			uuid = generateUUID();
-			refreshTokenKey = RedisUtil.PREFIX_REFRESH_TOKEN + uuid;
+	@Transactional
+	public void logout(LogoutRequestDto logoutRequestDto) {
+		String accessToken = logoutRequestDto.getAccessToken();
+		if (!tokenProvider.validateToken(accessToken)) {
+			throw new NotFoundException(ErrorCode.USER_NOT_FOUND);
 		}
-		redisUtil.setDataExpire(refreshTokenKey, tokenDto.getRefreshToken(), TokenInfo.REFRESH_TOKEN_EXPIRE_TIME);
 
-		tokenDto.setRefreshToken(uuid);
-		return tokenDto;
-	}
+		String refreshTokenKey = RedisUtil.PREFIX_REFRESH_TOKEN + logoutRequestDto.getRefreshToken();
 
-	private String generateUUID() {
-		return UUID.randomUUID().toString().substring(0, 6);
+		String refreshToken = redisUtil.getData(refreshTokenKey);
+		if (refreshToken == null) {
+			throw new NotFoundException(ErrorCode.TOKEN_NOT_FOUND);
+		}
+		redisUtil.deleteData(refreshTokenKey);
+
+		redisUtil.setDataExpire(RedisUtil.PREFIX_LOGOUT + accessToken, "logout", TokenInfo.ACCESS_TOKEN_EXPIRE_TIME);
 	}
 
 	@Transactional
@@ -108,4 +108,22 @@ public class AuthService{
 			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 	}
 
+	private TokenDto getRedisTokenKey(Authentication authentication) {
+		TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+
+		String uuid = generateUUID();
+		String refreshTokenKey = RedisUtil.PREFIX_REFRESH_TOKEN + uuid;
+		while (redisUtil.getData(refreshTokenKey) != null) {
+			uuid = generateUUID();
+			refreshTokenKey = RedisUtil.PREFIX_REFRESH_TOKEN + uuid;
+		}
+		redisUtil.setDataExpire(refreshTokenKey, tokenDto.getRefreshToken(), TokenInfo.REFRESH_TOKEN_EXPIRE_TIME);
+
+		tokenDto.setRefreshToken(uuid);
+		return tokenDto;
+	}
+
+	private String generateUUID() {
+		return UUID.randomUUID().toString().substring(0, 6);
+	}
 }

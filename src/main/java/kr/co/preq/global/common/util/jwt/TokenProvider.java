@@ -95,9 +95,8 @@ public class TokenProvider {
 	}
 
 	public boolean isLogout(String accessToken) {
-		// String data = redisUtil.getData(RedisUtil.PREFIX_LOGOUT + accessToken);
-		// return data != null;
-		return false;
+		String data = redisUtil.getData(RedisUtil.PREFIX_LOGOUT + accessToken);
+		return data != null;
 	}
 
 	private Claims parseClaims(String accessToken) {
