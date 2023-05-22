@@ -1,6 +1,6 @@
 package kr.co.preq.domain.board.controller;
 
-import kr.co.preq.domain.board.dto.BoardGetResponseDto;
+import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
 import kr.co.preq.domain.board.dto.BoardRequestDto;
 import kr.co.preq.domain.board.dto.BoardCreateResponseDto;
 import kr.co.preq.domain.board.service.BoardService;
@@ -46,9 +46,9 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public ApiResponse<List<BoardGetResponseDto>> getAllBoard(@RequestParam Long filter) {
+    public ApiResponse<List<BoardGetAllResponseDto>> getAllBoard(@RequestParam Long filter) {
 
-        List<BoardGetResponseDto> response =  boardService.getAllBoard(filter);
+        List<BoardGetAllResponseDto> response =  boardService.getAllBoard(filter);
 
         return ApiResponse.success(SuccessCode.GET_ALL_BOARD_SUCCESS, response);
     }

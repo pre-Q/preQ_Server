@@ -1,6 +1,6 @@
 package kr.co.preq.domain.board.service;
 
-import kr.co.preq.domain.board.dto.BoardGetResponseDto;
+import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
 import kr.co.preq.domain.board.dto.BoardRequestDto;
 import kr.co.preq.domain.board.dto.BoardCreateResponseDto;
 import kr.co.preq.domain.board.entity.Board;
@@ -50,21 +50,21 @@ public class BoardService {
 
     }
 
-    public List<BoardGetResponseDto> getAllBoard(Long filter) {
-        List<BoardGetResponseDto> results = new ArrayList<>();
+    public List<BoardGetAllResponseDto> getAllBoard(Long filter) {
+        List<BoardGetAllResponseDto> results = new ArrayList<>();
 
         if (filter == 0) {
             List<Board> orderByDate = boardRepository.findAll(Sort.by(desc("createdAt")));
 
             orderByDate.forEach(board -> {
-                results.add(BoardGetResponseDto.of(board.getId(), board.getMember().getName(), LocalDateTime.parse(String.valueOf(board.getCreatedAt())), board.getViews(), board.getTitle()));
+                results.add(BoardGetAllResponseDto.of(board.getId(), board.getMember().getName(), LocalDateTime.parse(String.valueOf(board.getCreatedAt())), board.getViews(), board.getTitle()));
             });
         }
         else if (filter == 1) {
             List<Board> orderByViews = boardRepository.findAll(Sort.by(desc("views")));
 
             orderByViews.forEach(board -> {
-                results.add(BoardGetResponseDto.of(board.getId(), board.getMember().getName(), LocalDateTime.parse(String.valueOf(board.getCreatedAt())), board.getViews(), board.getTitle()));
+                results.add(BoardGetAllResponseDto.of(board.getId(), board.getMember().getName(), LocalDateTime.parse(String.valueOf(board.getCreatedAt())), board.getViews(), board.getTitle()));
             });
         }
         else throw new CustomException(ErrorCode.VIOLATE_FILTER_RULE);
