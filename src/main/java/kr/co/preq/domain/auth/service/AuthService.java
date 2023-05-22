@@ -64,7 +64,6 @@ public class AuthService{
 		}
 
 		// 로그인
-		// TokenDto tokenDto = tokenProvider.generateTokenDto(member.getEmail());
 		UsernamePasswordAuthenticationToken authenticationToken = member.toAuthentication();
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		TokenDto tokenDto = getRedisTokenKey(authentication);
