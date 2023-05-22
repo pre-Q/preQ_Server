@@ -1,5 +1,9 @@
 package kr.co.preq.domain.preq.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.entity.Preq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -7,13 +11,23 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PreqMapper {
-    public PreqResponseDto toResponseDto(Preq preq) {
-        if (preq == null) return null;
+    public CoverLetterAndPreqResponseDto toResponseDto(CoverLetter coverLetter, List<Preq> preqList) {
+        if (coverLetter == null || preqList == null) return null;
 
-        PreqResponseDto.PreqResponseDtoBuilder preqResponseDto = PreqResponseDto.builder();
-        preqResponseDto.id(preq.getId());
-        preqResponseDto.question(preq.getQuestion());
+        CoverLetterAndPreqResponseDto.CoverLetterAndPreqResponseDtoBuilder builder = CoverLetterAndPreqResponseDto.builder();
+        builder.id(coverLetter.getId());
+        builder.question(coverLetter.getQuestion());
+        builder.answer(coverLetter.getAnswer());
 
-        return preqResponseDto.build();
+        List<PreqResponseDto> preqDtoList = new ArrayList<>();
+        for (Preq preq : preqList) {
+            preqDtoList.add(PreqResponseDto.builder()
+                .id(preq.getId())
+                .question((preq.getQuestion()))
+                .build());
+        }
+        builder.preqList(preqDtoList);
+
+        return builder.build();
     }
 }

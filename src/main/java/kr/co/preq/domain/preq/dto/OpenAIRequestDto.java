@@ -15,11 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 public class OpenAIRequestDto implements Serializable {
     private String model;
-    //private String prompt;
-    @JsonProperty("max_tokens")
-    private Integer maxTokens;
     private Integer n;
     private Double temperature;
+
+    @JsonProperty("max_tokens")
+    private Integer maxTokens;
+
     @JsonProperty("top_p")
     private Double topP;
     private List<Message> messages;
