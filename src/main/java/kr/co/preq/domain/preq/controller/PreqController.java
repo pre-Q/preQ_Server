@@ -22,9 +22,7 @@ public class PreqController {
 
 	@PostMapping()
 	public ApiResponse<CoverLetterResponseDto> saveCoverLetter(@RequestBody @Valid CoverLetterRequestDto requestDto) {
-
 		CoverLetterResponseDto responseDto = preqService.saveCoverLetter(requestDto);
-
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
 
@@ -35,9 +33,8 @@ public class PreqController {
 	}
 
 	@GetMapping("/{cletterId}")
-	public ApiResponse<List<PreqResponseDto>> sendQuestion(@PathVariable Long cletterId) {
-		List<PreqResponseDto> responseDto = preqService.askQuestion(cletterId);
-
+	public ApiResponse<CoverLetterAndPreqResponseDto> sendQuestion(@PathVariable Long cletterId) {
+		CoverLetterAndPreqResponseDto responseDto = preqService.getCoverLetterAndPreqList(cletterId);
 		return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
 	}
 }

@@ -10,15 +10,12 @@ import java.util.List;
 public class OpenAIResponseDto {
     private String question;
     private String id;
-
     private String object;
-
     private String model;
     private List<Choice> choices;
 
     @Builder
-    public OpenAIResponseDto(String id, String object, String model,
-                             List<Choice> choices) {
+    public OpenAIResponseDto(String id, String object, String model, List<Choice> choices) {
         this.id = id;
         this.object = object;
         this.model = model;
