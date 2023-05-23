@@ -24,14 +24,15 @@ public enum SuccessCode {
 	// 게시판
 	BOARD_POST_SUCCESS(CREATED, "글 작성 성공"),
 	BOARD_UPDATE_SUCCESS(OK, "글 수정 성공"),
-	ARTICLE_DELETE_SUCCESS(OK, "게시물 삭제 성공"),
-	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
 	GET_ALL_BOARD_SUCCESS(OK, "게시판 전체 조회 성공"),
+	GET_DETAIL_BOARD_SUCCESS(OK, "글 상세조회 성공"),
 
-	/* 201 CREATED */
-	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),
+	//댓글
 	COMMENT_CREATE_SUCCESS(CREATED, "댓글 생성 성공"),
-	ARTICLE_CREATE_SUCCESS(CREATED, "게시물 생성 성공"),
+	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
+
+	// 자기소개서
+	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),
 	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공");
 
 	private final HttpStatus status;
