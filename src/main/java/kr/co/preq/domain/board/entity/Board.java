@@ -48,4 +48,8 @@ public class Board extends BaseEntity {
         this.title = title;
         this.content = content;
     }
+
+    public void updateViews(Integer views) {
+        this.views = views;
+    }
 }
