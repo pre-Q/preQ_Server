@@ -1,10 +1,14 @@
 package kr.co.preq.domain.board.service;
 
 import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
+import kr.co.preq.domain.board.dto.BoardGetResponseDto;
 import kr.co.preq.domain.board.dto.BoardRequestDto;
 import kr.co.preq.domain.board.dto.BoardCreateResponseDto;
 import kr.co.preq.domain.board.entity.Board;
 import kr.co.preq.domain.board.repository.BoardRepository;
+import kr.co.preq.domain.comment.dto.CommentResponseDto;
+import kr.co.preq.domain.comment.entity.Comment;
+import kr.co.preq.domain.comment.repository.CommentRepository;
 import kr.co.preq.domain.member.entity.Member;
 
 import kr.co.preq.domain.member.service.MemberService;
@@ -27,6 +31,7 @@ import static org.springframework.data.domain.Sort.Order.desc;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberService memberService;
+    private final CommentRepository commentRepository;
 
     public BoardCreateResponseDto createBoard(BoardRequestDto request) {
         Member member = memberService.findMember();
@@ -72,10 +77,34 @@ public class BoardService {
         return results;
     }
 
-    private Board getBoard(Long boardId) {
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
+    public BoardGetResponseDto getDetailBoard(Long boardId) {
+        Board board = getBoard(boardId);
 
-        return board;
+        // 조회수 1 증가
+        Integer views = board.getViews() + 1;
+        board.updateViews(views);
+
+        List<CommentResponseDto> results = new ArrayList<>();
+        List<Comment> comments = commentRepository.findByBoardId(boardId);
+
+        comments.forEach(comment -> {
+            results.add(CommentResponseDto.of(comment.getId(), comment.getMember().getName(), comment.getContent()));
+        });
+
+        return BoardGetResponseDto.builder()
+                .id(board.getId())
+                .name(board.getMember().getName())
+                .createdAt(board.getCreatedAt())
+                .views((board.getViews()))
+                .title(board.getTitle())
+                .content(board.getContent())
+                .comments(results)
+                .build();
+    }
+
+    private Board getBoard(Long boardId) {
+
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
     }
 }
