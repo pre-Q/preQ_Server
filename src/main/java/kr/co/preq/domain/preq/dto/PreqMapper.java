@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PreqMapper {
-    public CoverLetterAndPreqResponseDto toResponseDto(CoverLetter coverLetter, List<Preq> preqList) {
+    public CoverLetterAndPreqResponseDto toResponseDto(CoverLetter coverLetter, List<Preq> preqList, ApplicationResponseDto keywordInfo) {
         if (coverLetter == null || preqList == null) return null;
 
         CoverLetterAndPreqResponseDto.CoverLetterAndPreqResponseDtoBuilder builder = CoverLetterAndPreqResponseDto.builder();
@@ -27,6 +27,8 @@ public class PreqMapper {
                 .build());
         }
         builder.preqList(preqDtoList);
+        builder.keywordTop5(keywordInfo.getData().getKeywordTop5());
+        builder.softSkills(keywordInfo.getData().getSoftSkills());
 
         return builder.build();
     }

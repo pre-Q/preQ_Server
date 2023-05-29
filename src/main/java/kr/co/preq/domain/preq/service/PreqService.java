@@ -8,6 +8,9 @@ import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
@@ -17,6 +20,8 @@ import kr.co.preq.domain.preq.repository.PreqRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,7 +79,31 @@ public class PreqService {
 
 		List<Preq> preqList = preqRepository.findPreqsByCoverLetterId(cletterId);
 
-		return preqMapper.toResponseDto(coverLetter, preqList);
+		// send request to flask
+		ApplicationResponseDto keywordInfo = sendRequestToFlask(ApplicationRequestDto.builder()
+			.application(coverLetter.getAnswer())
+			.build());
+
+
+		return preqMapper.toResponseDto(coverLetter, preqList, keywordInfo);
+	}
+
+	private ApplicationResponseDto sendRequestToFlask(ApplicationRequestDto requestDto) {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-type", "application/json; charset=UTF-8");
+
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<ApplicationResponseDto> responseEntity = restTemplate.postForEntity(
+				"http://localhost:8000/api/v1/keyword",
+				new HttpEntity<>(requestDto, headers),
+				ApplicationResponseDto.class
+			);
+
+			return responseEntity.getBody();
+		} catch (HttpClientErrorException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
