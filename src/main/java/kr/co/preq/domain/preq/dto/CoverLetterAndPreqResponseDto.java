@@ -16,4 +16,6 @@ public class CoverLetterAndPreqResponseDto {
 	private String question;
 	private String answer;
 	private List<PreqResponseDto> preqList;
+	private List<String> keywordTop5;
+	private List<Float> softSkills;
 }
