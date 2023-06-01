@@ -9,6 +9,7 @@ import kr.co.preq.domain.comment.repository.CommentRepository;
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.domain.member.repository.MemberRepository;
 import kr.co.preq.global.common.util.exception.CustomException;
+import kr.co.preq.global.common.util.exception.NotFoundException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,12 @@ public class CommentService {
         return memberRepository.findById(memberId).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND)
         );
+    }
+
+    public void deleteComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.COMMENT_NOT_FOUND));
+
+        commentRepository.delete(comment);
     }
 }
