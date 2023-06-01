@@ -95,7 +95,7 @@ public class PreqService {
 
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<ApplicationResponseDto> responseEntity = restTemplate.postForEntity(
-				"http://localhost:8000/api/v1/keyword",
+				"http://15.165.203.21:8000/api/v1/keyword",
 				new HttpEntity<>(requestDto, headers),
 				ApplicationResponseDto.class
 			);
