@@ -28,4 +28,12 @@ public class CommentController {
 
         return ApiResponse.success(SuccessCode.COMMENT_CREATE_SUCCESS, response);
     }
+
+    @DeleteMapping("/comment/{commentId}")
+    public ApiResponse<Object> deleteComment(@PathVariable Long commentId) {
+
+        commentService.deleteComment(commentId);
+
+        return ApiResponse.success(SuccessCode.COMMENT_DELETE_SUCCESS);
+    }
 }
