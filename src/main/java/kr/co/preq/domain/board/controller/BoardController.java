@@ -1,10 +1,12 @@
 package kr.co.preq.domain.board.controller;
 
+import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
 import kr.co.preq.domain.board.dto.BoardGetResponseDto;
 import kr.co.preq.domain.board.dto.BoardRequestDto;
 import kr.co.preq.domain.board.dto.BoardCreateResponseDto;
 import kr.co.preq.domain.board.service.BoardService;
+import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import kr.co.preq.global.common.util.response.SuccessCode;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/v1/board")
 public class BoardController {
     private final BoardService boardService;
+    private final AuthService authService;
 
     @PostMapping
     public ApiResponse<BoardCreateResponseDto> createBoard(@Valid @RequestBody BoardRequestDto boardRequestDto, Errors errors) {
@@ -28,7 +31,10 @@ public class BoardController {
             return ApiResponse.error(ErrorCode.VIOLATE_BOARD_RULE);
         }
 
-        BoardCreateResponseDto response = boardService.createBoard(boardRequestDto);
+        Member member = authService.findMember();
+        Long memberId = member.getId();
+
+        BoardCreateResponseDto response = boardService.createBoard(memberId, boardRequestDto);
 
         return ApiResponse.success(SuccessCode.BOARD_POST_SUCCESS, response);
     }
@@ -40,7 +46,10 @@ public class BoardController {
             return ApiResponse.error(ErrorCode.VIOLATE_BOARD_RULE);
         }
 
-        boardService.updateBoard(boardId, boardRequestDto);
+        Member member = authService.findMember();
+        Long memberId = member.getId();
+
+        boardService.updateBoard(memberId, boardId, boardRequestDto);
 
         return ApiResponse.success(SuccessCode.BOARD_UPDATE_SUCCESS);
     }
