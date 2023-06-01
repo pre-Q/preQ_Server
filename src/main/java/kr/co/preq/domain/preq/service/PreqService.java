@@ -2,7 +2,6 @@ package kr.co.preq.domain.preq.service;
 
 import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.CoverLetterMapper;
-import kr.co.preq.domain.preq.dto.PreqResponseDto;
 import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;

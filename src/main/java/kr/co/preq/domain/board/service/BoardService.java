@@ -11,6 +11,7 @@ import kr.co.preq.domain.comment.entity.Comment;
 import kr.co.preq.domain.comment.repository.CommentRepository;
 import kr.co.preq.domain.member.entity.Member;
 
+import kr.co.preq.domain.member.repository.MemberRepository;
 import kr.co.preq.domain.member.service.MemberService;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.exception.NotFoundException;
@@ -31,11 +32,11 @@ import static org.springframework.data.domain.Sort.Order.desc;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final MemberService memberService;
     private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository;
 
-    public BoardCreateResponseDto createBoard(BoardRequestDto request) {
-        Member member = memberService.findMember();
+    public BoardCreateResponseDto createBoard(Long memberId, BoardRequestDto request) {
+        Member member = findMember(memberId);
 
         String title = request.getTitle();
         String content = request.getContent();
@@ -47,13 +48,12 @@ public class BoardService {
                 .id(board.getId()).build();
     }
 
-    public void updateBoard(Long boardId, BoardRequestDto request) {
-        Member member = memberService.findMember();
+    public void updateBoard(Long memberId, Long boardId, BoardRequestDto request) {
+        Member member = findMember(memberId);
 
         Board board = getBoard(boardId);
 
         board.updateBoard(member, request.getTitle(), request.getContent());
-
     }
 
     public List<BoardGetAllResponseDto> getAllBoard(Long filter) {
@@ -114,5 +114,11 @@ public class BoardService {
                 .orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
 
         boardRepository.delete(board);
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+        );
     }
 }
