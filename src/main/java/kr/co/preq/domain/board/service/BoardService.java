@@ -23,6 +23,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import static org.springframework.data.domain.Sort.Order.desc;
 
 @Service
@@ -106,5 +108,12 @@ public class BoardService {
 
         return boardRepository.findById(boardId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
+    }
+
+    public void deleteBoard(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
+
+        boardRepository.delete(board);
     }
 }

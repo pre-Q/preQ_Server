@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/board")
@@ -60,5 +59,13 @@ public class BoardController {
         BoardGetResponseDto response = boardService.getDetailBoard(boardId);
 
         return ApiResponse.success(SuccessCode.GET_DETAIL_BOARD_SUCCESS, response);
+    }
+
+    @DeleteMapping("/{boardId}")
+    public ApiResponse<Object> deleteBoard(@PathVariable Long boardId) {
+
+        boardService.deleteBoard(boardId);
+
+        return ApiResponse.success(SuccessCode.BOARD_DELETE_SUCCESS);
     }
 }
