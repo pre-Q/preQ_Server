@@ -12,6 +12,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIResponseDto;
 import kr.co.preq.domain.preq.entity.CoverLetter;
@@ -32,6 +33,7 @@ public class OpenAIService {
 
 	@Value("${openai.api.command}")
 	private String COMMAND;
+
 	private String AUTHORIZATION = "Authorization";
 	private String BEARER = "Bearer ";
 	private Integer MAX_TOKEN = 300;
@@ -41,16 +43,17 @@ public class OpenAIService {
 	private String MEDIA_TYPE = "application/json; charset=UTF-8";
 	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 
-	public List<String> generateQuestions(CoverLetter coverLetter) {
-		String command = COMMAND + coverLetter.getAnswer();
-		System.out.println(command);
+	public List<String> generateQuestions(CoverLetterRequestDto requestDto) {
+		String prompt = "질문: " + requestDto.getQuestion() + "\n답변: " + requestDto.getAnswer();
+		System.out.println(prompt);
 
 		OpenAIResponseDto response = this.getResponse(
 			this.buildHttpEntity(
 				new OpenAIRequestDto(
 					MODEL,
 					N,
-					command
+					COMMAND,
+					prompt
 				)
 			)
 		);

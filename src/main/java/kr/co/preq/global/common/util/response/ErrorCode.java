@@ -16,6 +16,7 @@ public enum ErrorCode {
 	BAD_PARAMETER(BAD_REQUEST, "요청 파라미터가 잘못되었습니다."),
 	VIOLATE_BOARD_RULE(BAD_REQUEST, "제목 또는 본문이 없거나 제목은 최대 100자여야 합니다."),
 	VIOLATE_FILTER_RULE(BAD_REQUEST, "필터 범위를 벗어났습니다."),
+	NOT_AUTHORIZED(BAD_REQUEST, "허용된 요청이 아닙니다."),
 	SEARCH_BOARD_FAIL(BAD_REQUEST, "키워드를 넣어주세요."),
 
 	/* 401 UNAUTHORIZED: 인증 실패 */

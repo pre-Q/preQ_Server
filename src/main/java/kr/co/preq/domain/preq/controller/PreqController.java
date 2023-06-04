@@ -20,9 +20,9 @@ import java.util.List;
 public class PreqController {
 	private final PreqService preqService;
 
-	@PostMapping()
-	public ApiResponse<CoverLetterResponseDto> saveCoverLetter(@RequestBody @Valid CoverLetterRequestDto requestDto) {
-		CoverLetterResponseDto responseDto = preqService.saveCoverLetter(requestDto);
+	@PostMapping("")
+	public ApiResponse<PreqResponseDto> saveCoverLetter(@RequestBody @Valid PreqRequestDto requestDto) {
+		PreqResponseDto responseDto = preqService.saveCoverLetter(requestDto);
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
 
@@ -33,8 +33,14 @@ public class PreqController {
 	}
 
 	@GetMapping("/{cletterId}")
-	public ApiResponse<CoverLetterAndPreqResponseDto> sendQuestion(@PathVariable Long cletterId) {
-		CoverLetterAndPreqResponseDto responseDto = preqService.getCoverLetterAndPreqList(cletterId);
+	public ApiResponse<PreqResponseDto> getPreq(@PathVariable Long cletterId) {
+		PreqResponseDto responseDtoList = preqService.getPreq(cletterId);
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, responseDtoList);
+	}
+
+	@PostMapping("/result")
+	public ApiResponse<PreqAndKeywordResponseDto> sendQuestion(@RequestBody @Valid CoverLetterRequestDto requestDto) {
+		PreqAndKeywordResponseDto responseDto = preqService.getPreqAndKeyword(requestDto);
 		return ApiResponse.success(SuccessCode.PREQ_GET_SUCCESS, responseDto);
 	}
 }

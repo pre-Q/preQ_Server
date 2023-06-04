@@ -11,11 +11,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class CoverLetterAndPreqResponseDto {
-	private Long id;
-	private String question;
-	private String answer;
-	private List<PreqDto> preqList;
+public class PreqAndKeywordResponseDto {
+	private List<String> preqList;
 	private List<String> keywordTop5;
 	private List<Float> softSkills;
 }
