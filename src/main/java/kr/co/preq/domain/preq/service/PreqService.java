@@ -37,7 +37,7 @@ public class PreqService {
 	private final CoverLetterMapper coverLetterMapper;
 	private final PreqMapper preqMapper;
 
-	@Value("${flask.url}") private final String FLASK_URL;
+	@Value("${flask.url}") private String FLASK_URL;
 
 	@Transactional
 	public CoverLetterResponseDto saveCoverLetter(CoverLetterRequestDto requestDto) {
