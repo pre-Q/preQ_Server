@@ -27,6 +27,7 @@ public enum SuccessCode {
 	GET_ALL_BOARD_SUCCESS(OK, "게시판 전체 조회 성공"),
 	GET_DETAIL_BOARD_SUCCESS(OK, "글 상세조회 성공"),
 	BOARD_DELETE_SUCCESS(OK, "글 삭제 성공"),
+	SEARCH_BOARD_SUCCESS(OK, "게시판 글 검색 성공"),
 
 	//댓글
 	COMMENT_CREATE_SUCCESS(CREATED, "댓글 생성 성공"),

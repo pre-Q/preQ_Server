@@ -12,7 +12,6 @@ import kr.co.preq.domain.comment.repository.CommentRepository;
 import kr.co.preq.domain.member.entity.Member;
 
 import kr.co.preq.domain.member.repository.MemberRepository;
-import kr.co.preq.domain.member.service.MemberService;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.exception.NotFoundException;
 import kr.co.preq.global.common.util.response.ErrorCode;
@@ -120,5 +119,16 @@ public class BoardService {
         return memberRepository.findById(memberId).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND)
         );
+    }
+
+    public List<BoardGetAllResponseDto> getSearchedBoard(String keyword) {
+        List<BoardGetAllResponseDto> results = new ArrayList<>();
+
+        List<Board> boardsBySearch = boardRepository.findByTitleContaining(keyword);
+        boardsBySearch.forEach(board -> {
+                results.add(BoardGetAllResponseDto.of(board.getId(), board.getMember().getName(), LocalDateTime.parse(String.valueOf(board.getCreatedAt())), board.getViews(), board.getTitle()));
+        });
+
+        return results;
     }
 }
