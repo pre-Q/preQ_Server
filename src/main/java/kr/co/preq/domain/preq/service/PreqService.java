@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,13 +92,22 @@ public class PreqService {
 	@Transactional
 	public PreqAndKeywordResponseDto getPreqAndKeyword(CoverLetterRequestDto requestDto) {
 		List<String> questions = openAIService.generateQuestions(requestDto);
+		List<String> cutQuestions = new ArrayList<>();
+		questions.forEach(q -> {
+			if (q.contains(": ")) {
+				String[] str = q.split(": ");
+				cutQuestions.add(str[1]);
+			} else {
+				cutQuestions.add(q);
+			}
+		});
 
 		// send request to flask
 		ApplicationResponseDto keywordInfo = sendRequestToFlask(ApplicationRequestDto.builder()
 			.application(requestDto.getAnswer())
 			.build());
 
-		return preqMapper.toResponseDto(questions, keywordInfo);
+		return preqMapper.toResponseDto(cutQuestions, keywordInfo);
 	}
 
 	private ApplicationResponseDto sendRequestToFlask(ApplicationRequestDto requestDto) {
