@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class OpenAIRequestDto implements Serializable {
     private List<Message> messages;
 
     @Builder
-    public OpenAIRequestDto(String model, Integer n, String prompt) {
+    public OpenAIRequestDto(String model, Integer n, String command, String prompt) {
         this.model = model;
         this.n = n;
         //this.prompt = prompt;
@@ -34,6 +36,7 @@ public class OpenAIRequestDto implements Serializable {
         //this.temperature = temperature;
         //this.topP = topP;
         this.messages = new ArrayList<>();
+        this.messages.add(new Message("system", command));
         this.messages.add(new Message("user", prompt));
     }
 
