@@ -17,6 +17,7 @@ import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class PreqService {
 	private final CoverLetterMapper coverLetterMapper;
 	private final PreqMapper preqMapper;
 
-	@Value("${flask.url}") private final String FLASK_URL;
+	@Value("${flask.url}") private String FLASK_URL;
 
 	@Transactional
 	public CoverLetterResponseDto saveCoverLetter(CoverLetterRequestDto requestDto) {
