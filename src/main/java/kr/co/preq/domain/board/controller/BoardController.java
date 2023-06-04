@@ -5,6 +5,7 @@ import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
 import kr.co.preq.domain.board.dto.BoardGetResponseDto;
 import kr.co.preq.domain.board.dto.BoardRequestDto;
 import kr.co.preq.domain.board.dto.BoardCreateResponseDto;
+import kr.co.preq.domain.board.entity.Board;
 import kr.co.preq.domain.board.service.BoardService;
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.util.response.ApiResponse;
@@ -15,6 +16,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -76,5 +78,17 @@ public class BoardController {
         boardService.deleteBoard(boardId);
 
         return ApiResponse.success(SuccessCode.BOARD_DELETE_SUCCESS);
+    }
+
+    @GetMapping("/search")
+    public ApiResponse<List<BoardGetAllResponseDto>> getSearchedBoard(@RequestParam @NotBlank String keyword) {
+
+        if (keyword == null) {
+            return ApiResponse.error(ErrorCode.SEARCH_BOARD_FAIL);
+        }
+
+        List<BoardGetAllResponseDto> response = boardService.getSearchedBoard(keyword);
+
+        return ApiResponse.success(SuccessCode.SEARCH_BOARD_SUCCESS, response);
     }
 }
