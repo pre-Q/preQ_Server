@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-	private final String host = "https://api.preq.site";
-	private final String localhost = "http://localhost:";
+	private final String host = "https://www.preq.site";
+	private final String localhost = "http://localhost:3000";
 	private final int allowedMinPort = 3000;
 	private final int allowedMaxPort = 3010;
 	private List<String> allowedOrigins = new ArrayList<>();
