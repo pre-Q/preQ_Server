@@ -17,7 +17,6 @@ import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.domain.preq.entity.CoverLetter;
 import kr.co.preq.domain.preq.repository.CoverLetterRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.transaction.annotation.Transactional;
