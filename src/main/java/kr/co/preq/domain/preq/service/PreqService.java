@@ -7,6 +7,7 @@ import kr.co.preq.domain.preq.entity.Preq;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,8 @@ public class PreqService {
 	private final AuthService authService;
 	private final CoverLetterMapper coverLetterMapper;
 	private final PreqMapper preqMapper;
+
+	@Value("${flask.url}") private final String FLASK_URL;
 
 	@Transactional
 	public CoverLetterResponseDto saveCoverLetter(CoverLetterRequestDto requestDto) {
@@ -94,7 +97,7 @@ public class PreqService {
 
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<ApplicationResponseDto> responseEntity = restTemplate.postForEntity(
-				"http://15.165.203.21:8000/api/v1/keyword",
+				FLASK_URL,
 				new HttpEntity<>(requestDto, headers),
 				ApplicationResponseDto.class
 			);
