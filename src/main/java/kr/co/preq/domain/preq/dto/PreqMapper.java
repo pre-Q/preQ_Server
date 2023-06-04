@@ -37,8 +37,8 @@ public class PreqMapper {
                 .build());
         }
         builder.preqList(preqDtoList);
-        builder.keywords(coverLetter.getKeywords());
-        builder.abilities(coverLetter.getAbilities());
+        builder.keywordTop5(coverLetter.getKeywords());
+        builder.softSkills(coverLetter.getAbilities());
 
         return builder.build();
     }

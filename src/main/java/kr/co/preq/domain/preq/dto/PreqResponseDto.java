@@ -18,6 +18,6 @@ public class PreqResponseDto {
 	private String question;
 	private String answer;
 	private List<PreqDto> preqList;
-	private List<String> keywords;
-	private List<String> abilities;
+	private List<String> keywordTop5;
+	private List<String> softSkills;
 }
