@@ -14,6 +14,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.Getter;
 
 @MappedSuperclass
@@ -34,11 +35,10 @@ public abstract class BaseEntity {
 	@Column(name = "is_deleted")
 	@Getter
 	private boolean isDeleted = false;
-
-	// public boolean softDelete() {
-	// 	if (isDeleted == true)
-	// 		throw new IllegalStateException(ErrorCode.ALREADY_DELETED.getMessage());
-	// 	this.isDeleted = true;
-	// 	return true;
-	// }
+	public boolean softDelete() {	//TODO: softDelete 구현
+		if (isDeleted == true)
+			throw new IllegalStateException(ErrorCode.ALREADY_DELETED.getMessage());
+		this.isDeleted = true;
+		return true;
+	}
 }
