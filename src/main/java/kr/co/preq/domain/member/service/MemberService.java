@@ -1,5 +1,7 @@
 package kr.co.preq.domain.member.service;
 
+import kr.co.preq.domain.auth.service.AuthService;
+import kr.co.preq.domain.member.dto.MemberResponseDto;
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.domain.member.repository.MemberRepository;
 import kr.co.preq.global.common.util.exception.NotFoundException;
@@ -13,10 +15,14 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final AuthService authService;
 
-    @Transactional()
-    public Member findMember() {
-        return memberRepository.findById(1L)
-                .orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+    @Transactional
+    public MemberResponseDto getProfile() {
+        Member member = authService.findMember();
+        return MemberResponseDto.builder()
+            .email(member.getEmail())
+            .name(member.getName())
+            .build();
     }
 }
