@@ -20,6 +20,7 @@ public enum SuccessCode {
 	LOGOUT_SUCCESS(OK, "로그아웃 성공"),
 	ACCOUNT_READ_SUCCESS(OK, "계정 조회 성공"),
 	TOKEN_REISSUE_SUCCESS(OK, "토큰 재발급 성공"),
+	DELETE_ACCOUNT_SUCCESS(OK, "회원 탈퇴 성공"),
 
 	// 게시판
 	BOARD_POST_SUCCESS(CREATED, "글 작성 성공"),

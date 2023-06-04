@@ -18,6 +18,7 @@ public enum ErrorCode {
 	VIOLATE_FILTER_RULE(BAD_REQUEST, "필터 범위를 벗어났습니다."),
 	NOT_AUTHORIZED(BAD_REQUEST, "허용된 요청이 아닙니다."),
 	SEARCH_BOARD_FAIL(BAD_REQUEST, "키워드를 넣어주세요."),
+	ALREADY_DELETED(BAD_REQUEST, "이미 삭제된 값입니다"),
 
 	/* 401 UNAUTHORIZED: 인증 실패 */
 	UNAUTHORIZED_USER(UNAUTHORIZED, "만료되었거나 잘못된 토큰입니다. 토큰을 확인해주세요."),
