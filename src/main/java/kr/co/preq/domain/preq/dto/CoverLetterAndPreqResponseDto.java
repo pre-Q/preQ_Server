@@ -15,7 +15,7 @@ public class CoverLetterAndPreqResponseDto {
 	private Long id;
 	private String question;
 	private String answer;
-	private List<PreqResponseDto> preqList;
+	private List<PreqDto> preqList;
 	private List<String> keywordTop5;
 	private List<Float> softSkills;
 }
