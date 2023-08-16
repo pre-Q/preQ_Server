@@ -23,6 +23,11 @@ public class HelloController {
 		return "Hello World!";
 	}
 
+	@GetMapping("/api/v1")
+	String homes() {
+		return "Hello World!";
+	}
+
 	@GetMapping("/example")
 	ApiResponse<HelloResponseDto> example(@Valid @RequestBody CreateRequestDto request) {
 		//        if (true) {
