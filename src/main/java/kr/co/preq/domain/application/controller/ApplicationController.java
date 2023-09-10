@@ -29,6 +29,6 @@ public class ApplicationController {
     @PatchMapping("/{applicationId}")
     public ApiResponse<Object> updateApplicationTitle(@RequestParam Long applicationId, @RequestBody ApplicationTitleUpdateRequestDto requestDto) {
         applicationService.updateApplicationTitle(applicationId, requestDto);
-        return ApiResponse.success(SuccessCode.APPLICATION_UPDATE_SUCCESS);
+        return ApiResponse.success(SuccessCode.APPLICATION_TITLE_UPDATE_SUCCESS);
     }
 }
