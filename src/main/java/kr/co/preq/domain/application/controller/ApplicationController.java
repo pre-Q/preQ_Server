@@ -1,12 +1,14 @@
 package kr.co.preq.domain.application.controller;
 
+import kr.co.preq.domain.application.dto.response.ApplicationListGetResponseDto;
 import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
 import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.service.ApplicationService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,11 @@ public class ApplicationController {
         return ApiResponse.success(SuccessCode.APPLICATION_CREATE_SUCCESS, applicationId);
     }
 
+    @GetMapping("/list")
+    public ApiResponse<List<ApplicationListGetResponseDto>> getApplicationList() {
+        List<ApplicationListGetResponseDto> applicationList = applicationService.getApplicationList();
+
+        return ApiResponse.success(SuccessCode.APPLICATION_LIST_GET_SUCCESS, applicationList);
     @PatchMapping("/{applicationId}/title")
     public ApiResponse<Object> updateApplicationTitle(@RequestParam Long applicationId, @RequestBody ApplicationTitleUpdateRequestDto requestDto) {
         applicationService.updateApplicationTitle(applicationId, requestDto);

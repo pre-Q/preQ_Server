@@ -1,5 +1,6 @@
 package kr.co.preq.domain.application.service;
 
+import kr.co.preq.domain.application.dto.response.ApplicationListGetResponseDto;
 import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
 import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.entity.Application;
@@ -11,11 +12,13 @@ import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final AuthService authService;
@@ -30,6 +33,15 @@ public class ApplicationService {
 
         return application.getId();
     }
+
+    @Transactional
+    public List<ApplicationListGetResponseDto> getApplicationList() {
+        Member member = authService.findMember();
+        Long memberId = member.getId();
+
+        return applicationRepository.findAllByMemberId(memberId).stream()
+                .map(ApplicationListGetResponseDto::of)
+                .collect(Collectors.toList());
 
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
         Application application = applicationRepository.findById(applicationId)

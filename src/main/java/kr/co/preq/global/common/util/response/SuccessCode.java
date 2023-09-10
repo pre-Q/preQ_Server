@@ -40,6 +40,7 @@ public enum SuccessCode {
 
 	// 지원서
 	APPLICATION_CREATE_SUCCESS(CREATED, "지원서 생성 성공"),
+	APPLICATION_LIST_GET_SUCCESS(OK, "지원서 리스트 조회 성공");
 	APPLICATION_TITLE_UPDATE_SUCCESS(OK, "지원서 제목 수정 성공"),
 	APPLICATION_MEMO_UPDATE_SUCCESS(OK, "지원서 메모 수정 성공");
 
