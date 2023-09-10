@@ -1,5 +1,6 @@
 package kr.co.preq.domain.application.controller;
 
+import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
 import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.service.ApplicationService;
 import kr.co.preq.global.common.util.response.ApiResponse;
@@ -30,5 +31,11 @@ public class ApplicationController {
     public ApiResponse<Object> updateApplicationTitle(@RequestParam Long applicationId, @RequestBody ApplicationTitleUpdateRequestDto requestDto) {
         applicationService.updateApplicationTitle(applicationId, requestDto);
         return ApiResponse.success(SuccessCode.APPLICATION_TITLE_UPDATE_SUCCESS);
+    }
+
+    @PatchMapping("/{applicationId}/memo")
+    public ApiResponse<Object> updateApplicationMemo(@RequestParam Long applicationId, @RequestBody ApplicationMemoUpdateRequestDto requestDto) {
+        applicationService.updateApplicationMemo(applicationId, requestDto);
+        return ApiResponse.success(SuccessCode.APPLICATION_MEMO_UPDATE_SUCCESS);
     }
 }
