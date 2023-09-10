@@ -34,6 +34,8 @@ public class ApplicationController {
         List<ApplicationListGetResponseDto> applicationList = applicationService.getApplicationList();
 
         return ApiResponse.success(SuccessCode.APPLICATION_LIST_GET_SUCCESS, applicationList);
+    }
+
     @PatchMapping("/{applicationId}/title")
     public ApiResponse<Object> updateApplicationTitle(@RequestParam Long applicationId, @RequestBody ApplicationTitleUpdateRequestDto requestDto) {
         applicationService.updateApplicationTitle(applicationId, requestDto);
