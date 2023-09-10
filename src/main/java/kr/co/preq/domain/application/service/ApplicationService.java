@@ -1,5 +1,6 @@
 package kr.co.preq.domain.application.service;
 
+import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
 import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
@@ -35,5 +36,12 @@ public class ApplicationService {
             .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
 
         application.updateTitle(requestDto.getTitle());
+    }
+
+    public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
+        Application application = applicationRepository.findById(applicationId)
+            .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
+
+        application.updateMemo(requestDto.getMemo());
     }
 }
