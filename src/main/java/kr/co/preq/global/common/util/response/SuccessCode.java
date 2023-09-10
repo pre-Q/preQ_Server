@@ -39,7 +39,8 @@ public enum SuccessCode {
 	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공"),
 
 	// 지원서
-	APPLICATION_CREATE_SUCCESS(CREATED, "지원서 생성 성공");
+	APPLICATION_CREATE_SUCCESS(CREATED, "지원서 생성 성공"),
+	APPLICATION_TITLE_UPDATE_SUCCESS(OK, "지원서 제목 수정 성공");
 
 	private final HttpStatus status;
 	private final String message;
