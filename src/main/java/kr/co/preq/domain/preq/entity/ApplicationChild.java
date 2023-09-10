@@ -19,10 +19,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "coverletter")
+@Table(name = "applicationChild")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CoverLetter extends BaseEntity {
+public class ApplicationChild extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Member member;
@@ -42,7 +42,7 @@ public class CoverLetter extends BaseEntity {
 	private List<String> abilities;
 
 	@Builder
-	CoverLetter(Member member, String question, String answer, List<String> keywords, List<String> abilities) {
+	ApplicationChild(Member member, String question, String answer, List<String> keywords, List<String> abilities) {
 		Assert.notNull(member, "member must not be null");
 		Assert.notNull(question, "question must not be null");
 		Assert.notNull(answer, "answer must not be null");

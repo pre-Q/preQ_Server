@@ -1,4 +1,4 @@
-package kr.co.preq.domain.auth.service;
+package kr.co.preq.domain.board.auth.service;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

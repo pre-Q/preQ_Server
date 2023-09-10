@@ -3,7 +3,7 @@ package kr.co.preq.domain.preq.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.preq.domain.preq.entity.CoverLetter;
+import kr.co.preq.domain.preq.entity.ApplicationChild;
 import kr.co.preq.domain.preq.entity.Preq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,23 +12,23 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PreqMapper {
 
-    public CoverLetterResponseDto toResponseDto(CoverLetter coverLetter) {
-        if (coverLetter == null) return null;
+    public CoverLetterResponseDto toResponseDto(ApplicationChild applicationChild) {
+        if (applicationChild == null) return null;
 
         CoverLetterResponseDto.CoverLetterResponseDtoBuilder cLetterResponseDto = CoverLetterResponseDto.builder();
-        cLetterResponseDto.id(coverLetter.getId());
-        cLetterResponseDto.question(coverLetter.getQuestion());
+        cLetterResponseDto.id(applicationChild.getId());
+        cLetterResponseDto.question(applicationChild.getQuestion());
 
         return cLetterResponseDto.build();
     }
 
-    public PreqResponseDto toResponseDto(List<Preq> preqList, CoverLetter coverLetter) {
-        if (coverLetter == null) return null;
+    public PreqResponseDto toResponseDto(List<Preq> preqList, ApplicationChild applicationChild) {
+        if (applicationChild == null) return null;
 
         PreqResponseDto.PreqResponseDtoBuilder builder = PreqResponseDto.builder();
-        builder.id(coverLetter.getId());
-        builder.question(coverLetter.getQuestion());
-        builder.answer(coverLetter.getAnswer());
+        builder.id(applicationChild.getId());
+        builder.question(applicationChild.getQuestion());
+        builder.answer(applicationChild.getAnswer());
         List<PreqDto> preqDtoList = new ArrayList<>();
         for (Preq preq : preqList) {
             preqDtoList.add(PreqDto.builder()
@@ -37,8 +37,8 @@ public class PreqMapper {
                 .build());
         }
         builder.preqList(preqDtoList);
-        builder.keywordTop5(coverLetter.getKeywords());
-        builder.softSkills(coverLetter.getAbilities());
+        builder.keywordTop5(applicationChild.getKeywords());
+        builder.softSkills(applicationChild.getAbilities());
 
         return builder.build();
     }

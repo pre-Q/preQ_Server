@@ -1,4 +1,4 @@
-package kr.co.preq.domain.auth.dto;
+package kr.co.preq.domain.board.auth.dto;
 
 import javax.validation.constraints.NotBlank;
 
