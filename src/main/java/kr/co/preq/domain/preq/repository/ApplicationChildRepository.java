@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ApplicationChildRepository extends JpaRepository<ApplicationChild, Long> {
-    Optional<ApplicationChild> findCoverLetterById(Long cletterId);
-    List<ApplicationChild> findCoverLettersByMemberId(Long memberId);
+    Optional<ApplicationChild> findApplicationChildById(Long cletterId);
+    List<ApplicationChild> findApplicationChildByMemberIdAndApplicationId(Long memberId, Long applicationId);
 }

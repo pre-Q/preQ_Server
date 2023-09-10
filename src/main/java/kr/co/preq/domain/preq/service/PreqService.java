@@ -67,10 +67,10 @@ public class PreqService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<CoverLetterResponseDto> getPreqList() {
+	public List<CoverLetterResponseDto> getPreqList(Long applicationId) {
 		 Member member = authService.findMember();
 
-		List<ApplicationChild> applicationChildren = applicationChildRepository.findCoverLettersByMemberId(member.getId());
+		List<ApplicationChild> applicationChildren = applicationChildRepository.findApplicationChildByMemberIdAndApplicationId(member.getId(), applicationId);
 		return applicationChildren.stream()
 			.map(preqMapper::toResponseDto)
 			.collect(Collectors.toList());
@@ -80,7 +80,7 @@ public class PreqService {
 	public PreqResponseDto getPreq(Long achildId) {
 		Member member = authService.findMember();
 
-		ApplicationChild applicationChild = applicationChildRepository.findCoverLetterById(achildId)
+		ApplicationChild applicationChild = applicationChildRepository.findApplicationChildById(achildId)
 			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID));
 
 		if (!member.equals(applicationChild.getMember())) throw new CustomException(ErrorCode.NOT_AUTHORIZED);

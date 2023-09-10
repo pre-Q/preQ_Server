@@ -26,9 +26,9 @@ public class PreqController {
 		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
 	}
 
-	@GetMapping("/list")
-	public ApiResponse<List<CoverLetterResponseDto>> getList() {
-		List<CoverLetterResponseDto> responseDtoList = preqService.getPreqList();
+	@GetMapping("/list/{applicationId}")
+	public ApiResponse<List<CoverLetterResponseDto>> getList(@PathVariable Long applicationId) {
+		List<CoverLetterResponseDto> responseDtoList = preqService.getPreqList(applicationId);
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, responseDtoList);
 	}
 
