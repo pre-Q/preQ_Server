@@ -34,6 +34,6 @@ public class ApplicationService {
         Application application = applicationRepository.findById(applicationId)
             .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
 
-        application.setTitle(requestDto.getTitle());
+        application.updateTitle(requestDto.getTitle());
     }
 }

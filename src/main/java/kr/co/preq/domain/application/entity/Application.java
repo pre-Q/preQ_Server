@@ -14,7 +14,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Table(name = "application")
 @Getter
-@Setter
 @NoArgsConstructor(access = PROTECTED)
 public class Application extends BaseEntity {
     @Column(nullable = false, length = 100)
@@ -31,5 +30,9 @@ public class Application extends BaseEntity {
         this.title = title;
         this.memo = memo;
         this.member = member;
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
     }
 }
