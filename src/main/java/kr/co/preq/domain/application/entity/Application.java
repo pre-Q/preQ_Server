@@ -5,6 +5,7 @@ import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -29,5 +30,13 @@ public class Application extends BaseEntity {
         this.title = title;
         this.memo = memo;
         this.member = member;
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateMemo(String memo) {
+        this.memo = memo;
     }
 }

@@ -1,10 +1,14 @@
 package kr.co.preq.domain.application.service;
 
 import kr.co.preq.domain.application.dto.response.ApplicationListGetResponseDto;
+import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
+import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
 import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.member.entity.Member;
+import kr.co.preq.global.common.util.exception.NotFoundException;
+import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +42,18 @@ public class ApplicationService {
         return applicationRepository.findAllByMemberId(memberId).stream()
                 .map(ApplicationListGetResponseDto::of)
                 .collect(Collectors.toList());
+
+    public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
+        Application application = applicationRepository.findById(applicationId)
+            .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
+
+        application.updateTitle(requestDto.getTitle());
+    }
+
+    public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
+        Application application = applicationRepository.findById(applicationId)
+            .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
+
+        application.updateMemo(requestDto.getMemo());
     }
 }
