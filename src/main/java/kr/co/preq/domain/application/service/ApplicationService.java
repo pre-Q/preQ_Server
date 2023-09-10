@@ -1,9 +1,13 @@
 package kr.co.preq.domain.application.service;
 
+import kr.co.preq.domain.application.dto.UpdateApplicationTitleRequestDto;
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
 import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.member.entity.Member;
+import kr.co.preq.global.common.util.exception.CustomException;
+import kr.co.preq.global.common.util.exception.NotFoundException;
+import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +29,12 @@ public class ApplicationService {
         applicationRepository.save(application);
 
         return application.getId();
+    }
+
+    public void updateApplicationTitle(Long applicationId, UpdateApplicationTitleRequestDto requestDto) {
+        Application application = applicationRepository.findById(applicationId)
+            .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
+
+        application.setTitle(requestDto.getTitle());
     }
 }
