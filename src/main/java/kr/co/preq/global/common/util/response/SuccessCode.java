@@ -30,13 +30,16 @@ public enum SuccessCode {
 	BOARD_DELETE_SUCCESS(OK, "글 삭제 성공"),
 	SEARCH_BOARD_SUCCESS(OK, "게시판 글 검색 성공"),
 
-	//댓글
+	// 댓글
 	COMMENT_CREATE_SUCCESS(CREATED, "댓글 생성 성공"),
 	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
 
 	// 자기소개서
 	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),
-	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공");
+	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공"),
+
+	// 지원서
+	APPLICATION_CREATE_SUCCESS(CREATED, "지원서 생성 성공");
 
 	private final HttpStatus status;
 	private final String message;

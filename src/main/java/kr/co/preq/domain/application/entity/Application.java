@@ -2,22 +2,23 @@ package kr.co.preq.domain.application.entity;
 
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.entity.BaseEntity;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Entity
 @Table(name = "application")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 public class Application extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column()
+    @Column
     private String memo;
 
     @ManyToOne

@@ -1,4 +1,4 @@
-package kr.co.preq.domain.board.auth.dto;
+package kr.co.preq.domain.auth.dto;
 
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.util.jwt.TokenDto;

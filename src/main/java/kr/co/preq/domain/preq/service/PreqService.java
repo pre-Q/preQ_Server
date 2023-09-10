@@ -1,6 +1,6 @@
 package kr.co.preq.domain.preq.service;
 
-import kr.co.preq.domain.board.auth.service.AuthService;
+import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
 
