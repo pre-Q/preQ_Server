@@ -28,6 +28,14 @@ public class RestExceptionHandler {
 		return ApiResponse.error(exception.getCode());
 	}
 
+	// Custom Bad Request Error
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(BadRequestException.class)
+	protected ApiResponse<Object> handleBadRequestException(BadRequestException exception, HttpServletRequest request) {
+		logInfo(request, exception.getCode().getStatus(), exception.getCode().getMessage());
+		return ApiResponse.error(exception.getCode());
+	}
+
 	// @RequestBody valid 에러
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
