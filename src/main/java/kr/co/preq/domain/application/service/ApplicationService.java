@@ -42,6 +42,7 @@ public class ApplicationService {
         return applicationRepository.findAllByMemberId(memberId).stream()
                 .map(ApplicationListGetResponseDto::of)
                 .collect(Collectors.toList());
+    }
 
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
         Application application = applicationRepository.findById(applicationId)
