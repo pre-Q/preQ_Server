@@ -1,6 +1,5 @@
 package kr.co.preq.domain.application.controller;
 
-import kr.co.preq.domain.application.dto.ApplicationCreateResponseDto;
 import kr.co.preq.domain.application.service.ApplicationService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
@@ -16,9 +15,9 @@ public class ApplicationController {
     private final ApplicationService applicationService;
 
     @PostMapping
-    public ApiResponse<ApplicationCreateResponseDto> createApplication() {
-        ApplicationCreateResponseDto response = applicationService.createApplication();
+    public ApiResponse<Object> createApplication() {
+        Long applicationId = applicationService.createApplication();
 
-        return ApiResponse.success(SuccessCode.APPLICATION_CREATE_SUCCESS, response);
+        return ApiResponse.success(SuccessCode.APPLICATION_CREATE_SUCCESS, applicationId);
     }
 }

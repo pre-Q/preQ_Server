@@ -1,6 +1,5 @@
 package kr.co.preq.domain.application.service;
 
-import kr.co.preq.domain.application.dto.ApplicationCreateResponseDto;
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
 import kr.co.preq.domain.auth.service.AuthService;
@@ -17,7 +16,7 @@ public class ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final AuthService authService;
 
-    public ApplicationCreateResponseDto createApplication() {
+    public Long createApplication() {
         String title = "지원서 제목";
         String memo = "메모";
         Member member = authService.findMember();
@@ -25,7 +24,6 @@ public class ApplicationService {
         Application application = new Application(title, memo, member);
         applicationRepository.save(application);
 
-        return ApplicationCreateResponseDto.builder()
-                .id(application.getId()).build();
+        return application.getId();
     }
 }
