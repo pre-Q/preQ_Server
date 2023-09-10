@@ -21,17 +21,17 @@ import lombok.NoArgsConstructor;
 public class Preq extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private CoverLetter coverLetter;
+	private ApplicationChild applicationChild;
 
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String question;
 
 	@Builder
-	Preq(CoverLetter coverLetter, String question) {
-		Assert.notNull(coverLetter, "coverLetter must not be null");
+	Preq(ApplicationChild applicationChild, String question) {
+		Assert.notNull(applicationChild, "coverLetter must not be null");
 		Assert.notNull(question, "question must not be null");
 
-		this.coverLetter = coverLetter;
+		this.applicationChild = applicationChild;
 		this.question = question;
 	}
 }

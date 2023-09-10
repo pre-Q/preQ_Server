@@ -1,18 +1,17 @@
-package kr.co.preq.domain.auth.controller;
+package kr.co.preq.domain.board.auth.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import kr.co.preq.domain.board.auth.dto.AuthRequestDto;
+import kr.co.preq.domain.board.auth.dto.AuthResponseDto;
+import kr.co.preq.domain.board.auth.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.preq.domain.auth.dto.AuthRequestDto;
-import kr.co.preq.domain.auth.dto.AuthResponseDto;
-import kr.co.preq.domain.auth.dto.LogoutRequestDto;
-import kr.co.preq.domain.auth.dto.TokenRequestDto;
-import kr.co.preq.domain.auth.service.AuthService;
+import kr.co.preq.domain.board.auth.dto.LogoutRequestDto;
+import kr.co.preq.domain.board.auth.dto.TokenRequestDto;
 import kr.co.preq.global.common.util.jwt.TokenDto;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;

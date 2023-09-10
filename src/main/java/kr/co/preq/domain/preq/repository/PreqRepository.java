@@ -7,5 +7,5 @@ import kr.co.preq.domain.preq.entity.Preq;
 import java.util.List;
 
 public interface PreqRepository extends JpaRepository<Preq, Long> {
-    List<Preq> findPreqsByCoverLetterId(Long cletterId);
+    List<Preq> findPreqsByApplicationChildId(Long achildId);
 }

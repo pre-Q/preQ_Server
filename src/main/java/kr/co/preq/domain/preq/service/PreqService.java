@@ -1,6 +1,6 @@
 package kr.co.preq.domain.preq.service;
 
-import kr.co.preq.domain.auth.service.AuthService;
+import kr.co.preq.domain.board.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
 
@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
-import kr.co.preq.domain.preq.entity.CoverLetter;
-import kr.co.preq.domain.preq.repository.CoverLetterRepository;
+import kr.co.preq.domain.preq.entity.ApplicationChild;
+import kr.co.preq.domain.preq.repository.ApplicationChildRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class PreqService {
 
 	private final PreqRepository preqRepository;
-	private final CoverLetterRepository coverLetterRepository;
+	private final ApplicationChildRepository applicationChildRepository;
 	private final OpenAIService openAIService;
 	private final AuthService authService;
 	private final PreqMapper preqMapper;
@@ -43,7 +43,7 @@ public class PreqService {
 
 		Member member = authService.findMember();
 
-		CoverLetter coverLetter = CoverLetter.builder()
+		ApplicationChild applicationChild = ApplicationChild.builder()
 			.member(member)
 			.question(requestDto.getQuestion())
 			.answer(requestDto.getAnswer())
@@ -51,42 +51,42 @@ public class PreqService {
 			.abilities(requestDto.getAbilities())
 			.build();
 
-		coverLetterRepository.save(coverLetter);
+		applicationChildRepository.save(applicationChild);
 
 		requestDto.getPreqList().forEach(q -> {
 			Preq preq = Preq.builder()
 				.question(q)
-				.coverLetter(coverLetter)
+				.applicationChild(applicationChild)
 				.build();
 			preqRepository.save(preq);
 		});
 
-		List<Preq> preqList = preqRepository.findPreqsByCoverLetterId(coverLetter.getId());
+		List<Preq> preqList = preqRepository.findPreqsByApplicationChildId(applicationChild.getId());
 
-		return preqMapper.toResponseDto(preqList, coverLetter);
+		return preqMapper.toResponseDto(preqList, applicationChild);
 	}
 
 	@Transactional(readOnly = true)
 	public List<CoverLetterResponseDto> getPreqList() {
 		 Member member = authService.findMember();
 
-		List<CoverLetter> coverLetters = coverLetterRepository.findCoverLettersByMemberId(member.getId());
-		return coverLetters.stream()
+		List<ApplicationChild> applicationChildren = applicationChildRepository.findCoverLettersByMemberId(member.getId());
+		return applicationChildren.stream()
 			.map(preqMapper::toResponseDto)
 			.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
-	public PreqResponseDto getPreq(Long cletterId) {
+	public PreqResponseDto getPreq(Long achildId) {
 		Member member = authService.findMember();
 
-		CoverLetter coverLetter = coverLetterRepository.findCoverLetterById(cletterId)
+		ApplicationChild applicationChild = applicationChildRepository.findCoverLetterById(achildId)
 			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID));
 
-		if (!member.equals(coverLetter.getMember())) throw new CustomException(ErrorCode.NOT_AUTHORIZED);
+		if (!member.equals(applicationChild.getMember())) throw new CustomException(ErrorCode.NOT_AUTHORIZED);
 
-		List<Preq> preqList = preqRepository.findPreqsByCoverLetterId(cletterId);
-		return preqMapper.toResponseDto(preqList, coverLetter);
+		List<Preq> preqList = preqRepository.findPreqsByApplicationChildId(achildId);
+		return preqMapper.toResponseDto(preqList, applicationChild);
 	}
 
 	@Transactional

@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIResponseDto;
-import kr.co.preq.domain.preq.entity.CoverLetter;
 import lombok.RequiredArgsConstructor;
 
 @Service
