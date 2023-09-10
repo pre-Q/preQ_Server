@@ -1,6 +1,6 @@
 package kr.co.preq.domain.board.controller;
 
-import kr.co.preq.domain.board.auth.service.AuthService;
+import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
 import kr.co.preq.domain.board.dto.BoardGetResponseDto;
 import kr.co.preq.domain.board.dto.BoardRequestDto;

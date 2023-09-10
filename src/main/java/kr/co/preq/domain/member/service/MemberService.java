@@ -1,6 +1,6 @@
 package kr.co.preq.domain.member.service;
 
-import kr.co.preq.domain.board.auth.service.AuthService;
+import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.member.dto.MemberResponseDto;
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.domain.member.repository.MemberRepository;

@@ -1,6 +1,6 @@
 package kr.co.preq.domain.comment.controller;
 
-import kr.co.preq.domain.board.auth.service.AuthService;
+import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.comment.dto.CommentCreateResponseDto;
 import kr.co.preq.domain.comment.dto.CommentRequestDto;
 import kr.co.preq.domain.comment.service.CommentService;
