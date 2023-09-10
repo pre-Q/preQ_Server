@@ -1,6 +1,6 @@
 package kr.co.preq.domain.application.controller;
 
-import kr.co.preq.domain.application.dto.UpdateApplicationTitleRequestDto;
+import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.service.ApplicationService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
@@ -27,7 +27,7 @@ public class ApplicationController {
     }
 
     @PatchMapping("/{applicationId}")
-    public ApiResponse<Object> updateApplicationTitle(@RequestParam Long applicationId, @RequestBody UpdateApplicationTitleRequestDto requestDto) {
+    public ApiResponse<Object> updateApplicationTitle(@RequestParam Long applicationId, @RequestBody ApplicationTitleUpdateRequestDto requestDto) {
         applicationService.updateApplicationTitle(applicationId, requestDto);
         return ApiResponse.success(SuccessCode.APPLICATION_UPDATE_SUCCESS);
     }

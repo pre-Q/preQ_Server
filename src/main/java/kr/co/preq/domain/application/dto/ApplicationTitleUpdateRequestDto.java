@@ -3,6 +3,6 @@ package kr.co.preq.domain.application.dto;
 import lombok.Getter;
 
 @Getter
-public class UpdateApplicationTitleRequestDto {
+public class ApplicationTitleUpdateRequestDto {
 	private String title;
 }
