@@ -43,7 +43,8 @@ public class ApplicationService {
                 .map(ApplicationListGetResponseDto::of)
                 .collect(Collectors.toList());
     }
-  
+    
+    @Transactional
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
         Application application = applicationRepository.findById(applicationId)
             .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
@@ -51,6 +52,7 @@ public class ApplicationService {
         application.updateTitle(requestDto.getTitle());
     }
 
+    @Transactional
     public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
         Application application = applicationRepository.findById(applicationId)
             .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));

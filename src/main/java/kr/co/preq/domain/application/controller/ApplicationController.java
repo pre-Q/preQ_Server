@@ -8,9 +8,7 @@ import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +28,6 @@ public class ApplicationController {
 
         return ApiResponse.success(SuccessCode.APPLICATION_CREATE_SUCCESS, applicationId);
     }
-
 
     @GetMapping("/list")
     public ApiResponse<List<ApplicationListGetResponseDto>> getApplicationList() {
