@@ -10,6 +10,5 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
     List<Application> findAllByMemberId(Long memberId);
-
 	Optional<Application> findByIdAndMemberId(Long id, Long memberId);
 }
