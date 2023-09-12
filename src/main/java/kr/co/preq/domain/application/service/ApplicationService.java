@@ -44,6 +44,7 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
         Member member = authService.findMember();
         Application application = applicationRepository.findByIdAndMemberId(applicationId, member.getId())
@@ -52,6 +53,7 @@ public class ApplicationService {
         application.updateTitle(requestDto.getTitle());
     }
 
+    @Transactional
     public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
         Member member = authService.findMember();
         Application application = applicationRepository.findByIdAndMemberId(applicationId, member.getId())

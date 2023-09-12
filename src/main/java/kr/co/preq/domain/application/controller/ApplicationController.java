@@ -8,7 +8,6 @@ import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,7 +28,7 @@ public class ApplicationController {
 
         return ApiResponse.success(SuccessCode.APPLICATION_CREATE_SUCCESS, applicationId);
     }
-    
+
     @GetMapping("/list")
     public ApiResponse<List<ApplicationListGetResponseDto>> getApplicationList() {
         List<ApplicationListGetResponseDto> applicationList = applicationService.getApplicationList();
