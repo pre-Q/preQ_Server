@@ -7,7 +7,7 @@ import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
 import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.member.entity.Member;
-import kr.co.preq.global.common.util.exception.NotFoundException;
+import kr.co.preq.global.common.util.exception.BadRequestException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,19 +43,21 @@ public class ApplicationService {
                 .map(ApplicationListGetResponseDto::of)
                 .collect(Collectors.toList());
     }
-    
+
     @Transactional
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
-        Application application = applicationRepository.findById(applicationId)
-            .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
+        Member member = authService.findMember();
+        Application application = applicationRepository.findByIdAndMemberId(applicationId, member.getId())
+                .orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
 
         application.updateTitle(requestDto.getTitle());
     }
 
     @Transactional
     public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
-        Application application = applicationRepository.findById(applicationId)
-            .orElseThrow(() -> new NotFoundException(ErrorCode.NO_ID));
+        Member member = authService.findMember();
+        Application application = applicationRepository.findByIdAndMemberId(applicationId, member.getId())
+                .orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
 
         application.updateMemo(requestDto.getMemo());
     }
