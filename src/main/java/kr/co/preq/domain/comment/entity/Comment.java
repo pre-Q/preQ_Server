@@ -24,7 +24,7 @@ public class Comment extends BaseEntity {
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
     private Member member; // 댓글 작성자
 
     @Builder

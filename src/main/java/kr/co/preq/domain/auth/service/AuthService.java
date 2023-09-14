@@ -2,8 +2,8 @@ package kr.co.preq.domain.auth.service;
 
 import java.util.UUID;
 
-import kr.co.preq.domain.auth.dto.AuthRequestDto;
-import kr.co.preq.domain.auth.dto.AuthResponseDto;
+import kr.co.preq.domain.auth.dto.request.AuthRequestDto;
+import kr.co.preq.domain.auth.dto.response.AuthResponseDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import kr.co.preq.domain.auth.dto.LogoutRequestDto;
-import kr.co.preq.domain.auth.dto.TokenRequestDto;
-import kr.co.preq.domain.member.dto.MemberRequestDto;
+import kr.co.preq.domain.auth.dto.request.LogoutRequestDto;
+import kr.co.preq.domain.auth.dto.request.TokenRequestDto;
+import kr.co.preq.domain.member.dto.request.MemberRequestDto;
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.domain.member.repository.MemberRepository;
 import kr.co.preq.global.common.util.RedisUtil;

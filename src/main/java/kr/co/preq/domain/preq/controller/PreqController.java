@@ -1,6 +1,6 @@
 package kr.co.preq.domain.preq.controller;
 
-import kr.co.preq.domain.preq.dto.*;
+import kr.co.preq.domain.preq.dto.response.PreqAndKeywordResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import kr.co.preq.domain.preq.service.PreqService;

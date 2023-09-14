@@ -1,8 +1,8 @@
 package kr.co.preq.domain.application.service;
 
 import kr.co.preq.domain.application.dto.response.ApplicationListGetResponseDto;
-import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
-import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
+import kr.co.preq.domain.application.dto.request.ApplicationMemoUpdateRequestDto;
+import kr.co.preq.domain.application.dto.request.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
 import kr.co.preq.domain.auth.service.AuthService;

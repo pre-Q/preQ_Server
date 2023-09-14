@@ -1,12 +1,12 @@
 package kr.co.preq.domain.board.service;
 
-import kr.co.preq.domain.board.dto.BoardGetAllResponseDto;
-import kr.co.preq.domain.board.dto.BoardGetResponseDto;
-import kr.co.preq.domain.board.dto.BoardRequestDto;
-import kr.co.preq.domain.board.dto.BoardCreateResponseDto;
+import kr.co.preq.domain.board.dto.response.BoardGetAllResponseDto;
+import kr.co.preq.domain.board.dto.response.BoardGetResponseDto;
+import kr.co.preq.domain.board.dto.request.BoardRequestDto;
+import kr.co.preq.domain.board.dto.response.BoardCreateResponseDto;
 import kr.co.preq.domain.board.entity.Board;
 import kr.co.preq.domain.board.repository.BoardRepository;
-import kr.co.preq.domain.comment.dto.CommentResponseDto;
+import kr.co.preq.domain.comment.dto.response.CommentResponseDto;
 import kr.co.preq.domain.comment.entity.Comment;
 import kr.co.preq.domain.comment.repository.CommentRepository;
 import kr.co.preq.domain.member.entity.Member;

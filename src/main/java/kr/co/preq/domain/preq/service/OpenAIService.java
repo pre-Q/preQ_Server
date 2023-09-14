@@ -12,8 +12,8 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import kr.co.preq.domain.preq.dto.OpenAIRequestDto;
-import kr.co.preq.domain.preq.dto.OpenAIResponseDto;
+import kr.co.preq.domain.preq.dto.request.OpenAIRequestDto;
+import kr.co.preq.domain.preq.dto.response.OpenAIResponseDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
