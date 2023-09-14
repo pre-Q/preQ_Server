@@ -28,7 +28,7 @@ public class ApplicationController {
 
         return ApiResponse.success(SuccessCode.APPLICATION_CREATE_SUCCESS, applicationId);
     }
-
+    
     @GetMapping("/list")
     public ApiResponse<List<ApplicationListGetResponseDto>> getApplicationList() {
         List<ApplicationListGetResponseDto> applicationList = applicationService.getApplicationList();
