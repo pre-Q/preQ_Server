@@ -3,7 +3,7 @@ package kr.co.preq.domain.auth.service;
 import java.util.UUID;
 
 import kr.co.preq.domain.auth.dto.request.AuthRequestDto;
-import kr.co.preq.domain.board.dto.response.response.AuthResponseDto;
+import kr.co.preq.domain.auth.dto.response.AuthResponseDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
