@@ -1,4 +1,4 @@
-package kr.co.preq.domain.applicationChild.dto;
+package kr.co.preq.domain.preq.dto;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationResponseDto {
+public class KeywordAndSoftskillsResponseDto {
 	private int status;
 	private String message;
 	private dataObject data;

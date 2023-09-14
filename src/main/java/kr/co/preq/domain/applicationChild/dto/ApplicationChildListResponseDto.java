@@ -1,6 +1,4 @@
-package kr.co.preq.domain.preq.dto;
-
-import java.util.List;
+package kr.co.preq.domain.applicationChild.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +11,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PreqResponseDto {
+public class ApplicationChildListResponseDto {
 	private Long id;
 	private String question;
-	private String answer;
-	private List<PreqDto> preqList;
-	private List<String> keywordTop5;
-	private List<String> softSkills;
 }

@@ -28,7 +28,7 @@ public class Preq extends BaseEntity {
 	private String question;
 
 	@Builder
-	Preq(ApplicationChild applicationChild, String question) {
+	public Preq(ApplicationChild applicationChild, String question) {
 		Assert.notNull(applicationChild, "coverLetter must not be null");
 		Assert.notNull(question, "question must not be null");
 
