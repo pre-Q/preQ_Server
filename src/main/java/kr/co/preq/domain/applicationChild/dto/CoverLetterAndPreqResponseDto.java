@@ -1,7 +1,8 @@
-package kr.co.preq.domain.preq.dto;
+package kr.co.preq.domain.applicationChild.dto;
 
 import java.util.List;
 
+import kr.co.preq.domain.preq.dto.PreqDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

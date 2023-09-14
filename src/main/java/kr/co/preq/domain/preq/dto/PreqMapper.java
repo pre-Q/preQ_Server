@@ -3,7 +3,9 @@ package kr.co.preq.domain.preq.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.preq.domain.preq.entity.ApplicationChild;
+import kr.co.preq.domain.applicationChild.dto.ApplicationResponseDto;
+import kr.co.preq.domain.applicationChild.dto.CoverLetterResponseDto;
+import kr.co.preq.domain.applicationChild.entity.ApplicationChild;
 import kr.co.preq.domain.preq.entity.Preq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,16 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PreqMapper {
-
-    public CoverLetterResponseDto toResponseDto(ApplicationChild applicationChild) {
-        if (applicationChild == null) return null;
-
-        CoverLetterResponseDto.CoverLetterResponseDtoBuilder cLetterResponseDto = CoverLetterResponseDto.builder();
-        cLetterResponseDto.id(applicationChild.getId());
-        cLetterResponseDto.question(applicationChild.getQuestion());
-
-        return cLetterResponseDto.build();
-    }
 
     public PreqResponseDto toResponseDto(List<Preq> preqList, ApplicationChild applicationChild) {
         if (applicationChild == null) return null;

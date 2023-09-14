@@ -12,7 +12,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
+import kr.co.preq.domain.applicationChild.dto.CoverLetterRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIResponseDto;
 import lombok.RequiredArgsConstructor;

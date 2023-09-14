@@ -20,18 +20,6 @@ import java.util.List;
 public class PreqController {
 	private final PreqService preqService;
 
-	@PostMapping("")
-	public ApiResponse<PreqResponseDto> saveCoverLetter(@RequestBody @Valid PreqRequestDto requestDto) {
-		PreqResponseDto responseDto = preqService.saveCoverLetter(requestDto);
-		return ApiResponse.success(SuccessCode.COVERLETTER_CREATE_SUCCESS, responseDto);
-	}
-
-	@GetMapping("/list/{applicationId}")
-	public ApiResponse<List<CoverLetterResponseDto>> getList(@PathVariable Long applicationId) {
-		List<CoverLetterResponseDto> responseDtoList = preqService.getPreqList(applicationId);
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, responseDtoList);
-	}
-
 	@GetMapping("/{cletterId}")
 	public ApiResponse<PreqResponseDto> getPreq(@PathVariable Long cletterId) {
 		PreqResponseDto responseDtoList = preqService.getPreq(cletterId);

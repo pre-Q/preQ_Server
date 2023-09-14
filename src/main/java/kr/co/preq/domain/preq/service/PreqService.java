@@ -1,6 +1,10 @@
 package kr.co.preq.domain.preq.service;
 
-import kr.co.preq.domain.auth.service.AuthService;
+import kr.co.preq.domain.applicationChild.dto.ApplicationRequestDto;
+import kr.co.preq.domain.applicationChild.dto.ApplicationResponseDto;
+import kr.co.preq.domain.applicationChild.dto.CoverLetterRequestDto;
+import kr.co.preq.domain.applicationChild.dto.CoverLetterResponseDto;
+import kr.co.preq.domain.board.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
 
@@ -11,8 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kr.co.preq.domain.member.entity.Member;
-import kr.co.preq.domain.preq.entity.ApplicationChild;
-import kr.co.preq.domain.preq.repository.ApplicationChildRepository;
+import kr.co.preq.domain.applicationChild.entity.ApplicationChild;
+import kr.co.preq.domain.applicationChild.repository.ApplicationChildRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
@@ -38,43 +42,6 @@ public class PreqService {
 
 	@Value("${flask.url}") private String FLASK_URL;
 
-	@Transactional
-	public PreqResponseDto saveCoverLetter(PreqRequestDto requestDto) {
-
-		Member member = authService.findMember();
-
-		ApplicationChild applicationChild = ApplicationChild.builder()
-			.member(member)
-			.question(requestDto.getQuestion())
-			.answer(requestDto.getAnswer())
-			.keywords(requestDto.getKeywords())
-			.abilities(requestDto.getAbilities())
-			.build();
-
-		applicationChildRepository.save(applicationChild);
-
-		requestDto.getPreqList().forEach(q -> {
-			Preq preq = Preq.builder()
-				.question(q)
-				.applicationChild(applicationChild)
-				.build();
-			preqRepository.save(preq);
-		});
-
-		List<Preq> preqList = preqRepository.findPreqsByApplicationChildId(applicationChild.getId());
-
-		return preqMapper.toResponseDto(preqList, applicationChild);
-	}
-
-	@Transactional(readOnly = true)
-	public List<CoverLetterResponseDto> getPreqList(Long applicationId) {
-		 Member member = authService.findMember();
-
-		List<ApplicationChild> applicationChildren = applicationChildRepository.findApplicationChildByMemberIdAndApplicationId(member.getId(), applicationId);
-		return applicationChildren.stream()
-			.map(preqMapper::toResponseDto)
-			.collect(Collectors.toList());
-	}
 
 	@Transactional(readOnly = true)
 	public PreqResponseDto getPreq(Long achildId) {

@@ -1,4 +1,4 @@
-package kr.co.preq.domain.preq.dto;
+package kr.co.preq.domain.applicationChild.dto;
 
 import lombok.Builder;
 import lombok.Getter;

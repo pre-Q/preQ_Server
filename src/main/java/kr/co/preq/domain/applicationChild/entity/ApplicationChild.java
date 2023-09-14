@@ -1,4 +1,4 @@
-package kr.co.preq.domain.preq.entity;
+package kr.co.preq.domain.applicationChild.entity;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.member.entity.Member;
+import kr.co.preq.domain.preq.entity.StringListConverter;
 import kr.co.preq.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,8 +1,8 @@
-package kr.co.preq.domain.preq.repository;
+package kr.co.preq.domain.applicationChild.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.co.preq.domain.preq.entity.ApplicationChild;
+import kr.co.preq.domain.applicationChild.entity.ApplicationChild;
 
 import java.util.List;
 import java.util.Optional;
