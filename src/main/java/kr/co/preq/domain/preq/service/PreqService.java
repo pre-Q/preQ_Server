@@ -1,5 +1,7 @@
 package kr.co.preq.domain.preq.service;
 
+import kr.co.preq.domain.preq.dto.KeywordAndSoftskillsRequestDto;
+import kr.co.preq.domain.preq.dto.KeywordAndSoftskillsResponseDto;
 import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.*;
 import kr.co.preq.domain.preq.entity.Preq;
@@ -10,11 +12,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import kr.co.preq.domain.member.entity.Member;
-import kr.co.preq.domain.preq.entity.ApplicationChild;
-import kr.co.preq.domain.preq.repository.ApplicationChildRepository;
+import kr.co.preq.domain.applicationChild.entity.ApplicationChild;
+import kr.co.preq.domain.applicationChild.repository.ApplicationChildRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
-import kr.co.preq.global.common.util.exception.CustomException;
+import kr.co.preq.global.common.util.exception.BadRequestException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 
@@ -38,60 +39,19 @@ public class PreqService {
 
 	@Value("${flask.url}") private String FLASK_URL;
 
-	@Transactional
-	public PreqResponseDto saveCoverLetter(PreqRequestDto requestDto) {
 
-		Member member = authService.findMember();
 
-		ApplicationChild applicationChild = ApplicationChild.builder()
-			.member(member)
-			.question(requestDto.getQuestion())
-			.answer(requestDto.getAnswer())
-			.keywords(requestDto.getKeywords())
-			.abilities(requestDto.getAbilities())
-			.build();
-
-		applicationChildRepository.save(applicationChild);
-
-		requestDto.getPreqList().forEach(q -> {
-			Preq preq = Preq.builder()
-				.question(q)
-				.applicationChild(applicationChild)
-				.build();
-			preqRepository.save(preq);
-		});
-
-		List<Preq> preqList = preqRepository.findPreqsByApplicationChildId(applicationChild.getId());
-
-		return preqMapper.toResponseDto(preqList, applicationChild);
-	}
-
-	@Transactional(readOnly = true)
-	public List<CoverLetterResponseDto> getPreqList(Long applicationId) {
-		 Member member = authService.findMember();
-
-		List<ApplicationChild> applicationChildren = applicationChildRepository.findApplicationChildByMemberIdAndApplicationId(member.getId(), applicationId);
-		return applicationChildren.stream()
-			.map(preqMapper::toResponseDto)
-			.collect(Collectors.toList());
-	}
-
-	@Transactional(readOnly = true)
-	public PreqResponseDto getPreq(Long achildId) {
-		Member member = authService.findMember();
-
-		ApplicationChild applicationChild = applicationChildRepository.findApplicationChildById(achildId)
-			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID));
-
-		if (!member.equals(applicationChild.getMember())) throw new CustomException(ErrorCode.NOT_AUTHORIZED);
-
-		List<Preq> preqList = preqRepository.findPreqsByApplicationChildId(achildId);
-		return preqMapper.toResponseDto(preqList, applicationChild);
-	}
 
 	@Transactional
-	public PreqAndKeywordResponseDto getPreqAndKeyword(CoverLetterRequestDto requestDto) {
-		List<String> questions = openAIService.generateQuestions(requestDto);
+	public PreqAndKeywordResponseDto createPreqAndKeyword(Long applicationChildId) {
+
+		ApplicationChild applicationChild = applicationChildRepository.findById(applicationChildId)
+			.orElseThrow(() -> new BadRequestException(ErrorCode.NO_ID));
+
+		// generate preQuestions
+		List<String> questions = openAIService.generateQuestions(applicationChild.getQuestion(), applicationChild.getAnswer());
+
+		// manufacturing chatGPT response
 		List<String> cutQuestions = new ArrayList<>();
 		questions.forEach(q -> {
 			if (q.contains(": ")) {
@@ -102,24 +62,38 @@ public class PreqService {
 			}
 		});
 
-		// send request to flask
-		ApplicationResponseDto keywordInfo = sendRequestToFlask(ApplicationRequestDto.builder()
-			.application(requestDto.getAnswer())
+		// insert generated preQuestions into DB
+		cutQuestions.forEach(q -> {
+			Preq preq = Preq.builder()
+				.question(q)
+				.applicationChild(applicationChild)
+				.build();
+			preqRepository.save(preq);
+		});
+
+		// extract keywords
+		KeywordAndSoftskillsResponseDto keywordAndSoftskillsInfo = sendRequestToFlask(KeywordAndSoftskillsRequestDto.builder()
+			.application(applicationChild.getAnswer())
 			.build());
 
-		return preqMapper.toResponseDto(cutQuestions, keywordInfo);
+		// update application child keywords and abilities
+		applicationChild.updateKeywords(keywordAndSoftskillsInfo.getData().getKeywordTop5());
+		applicationChild.updateAbilities(keywordAndSoftskillsInfo.getData().getSoftSkills()
+			.stream().map(String::valueOf).collect(Collectors.toList()));
+
+		return preqMapper.toResponseDto(cutQuestions, keywordAndSoftskillsInfo);
 	}
 
-	private ApplicationResponseDto sendRequestToFlask(ApplicationRequestDto requestDto) {
+	private KeywordAndSoftskillsResponseDto sendRequestToFlask(KeywordAndSoftskillsRequestDto requestDto) {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-type", "application/json; charset=UTF-8");
 
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<ApplicationResponseDto> responseEntity = restTemplate.postForEntity(
+			ResponseEntity<KeywordAndSoftskillsResponseDto> responseEntity = restTemplate.postForEntity(
 				FLASK_URL,
 				new HttpEntity<>(requestDto, headers),
-				ApplicationResponseDto.class
+				KeywordAndSoftskillsResponseDto.class
 			);
 
 			return responseEntity.getBody();

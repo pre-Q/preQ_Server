@@ -35,7 +35,7 @@ public enum SuccessCode {
 	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
 
 	// 자기소개서
-	COVERLETTER_CREATE_SUCCESS(CREATED, "자기소개서 생성 성공"),
+	APPLICATIONCHILD_CREATE_SUCCESS(CREATED, "지원서 문항 생성 성공"),
 	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공"),
 
 	// 지원서

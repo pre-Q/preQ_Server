@@ -1,4 +1,4 @@
-package kr.co.preq.domain.preq.entity;
+package kr.co.preq.domain.applicationChild.entity;
 
 import java.util.List;
 
@@ -37,28 +37,32 @@ public class ApplicationChild extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String answer;
 
-	@Column(nullable = false)
+	@Column
 	@Convert(converter = StringListConverter.class)
 	private List<String> keywords;
 
-	@Column(nullable = false)
+	@Column
 	@Convert(converter = StringListConverter.class)
 	private List<String> abilities;
 
 	@Builder
-	ApplicationChild(Application application, Member member, String question, String answer, List<String> keywords, List<String> abilities) {
+	public ApplicationChild(Application application, Member member, String question, String answer) {
 		Assert.notNull(application, "application must not be null");
 		Assert.notNull(member, "member must not be null");
 		Assert.notNull(question, "question must not be null");
 		Assert.notNull(answer, "answer must not be null");
-		Assert.notNull(keywords, "keywords must not be null");
-		Assert.notNull(abilities, "abilities must not be null");
 
 		this.application = application;
 		this.member = member;
 		this.question = question;
 		this.answer = answer;
+	}
+
+	public void updateKeywords(List<String> keywords) {
 		this.keywords = keywords;
+	}
+
+	public void updateAbilities(List<String> abilities) {
 		this.abilities = abilities;
 	}
 }

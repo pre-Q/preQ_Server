@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationResponseDto {
+public class KeywordAndSoftskillsResponseDto {
 	private int status;
 	private String message;
 	private dataObject data;

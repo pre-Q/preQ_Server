@@ -1,4 +1,4 @@
-package kr.co.preq.domain.preq.dto;
+package kr.co.preq.domain.applicationChild.dto;
 
 import javax.validation.constraints.NotBlank;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CoverLetterRequestDto {
+public class ApplicationChildRequestDto {
 	@NotBlank(message = "문항이 없습니다.")
 	private String question;
 

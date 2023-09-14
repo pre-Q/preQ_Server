@@ -12,7 +12,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import kr.co.preq.domain.preq.dto.CoverLetterRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIRequestDto;
 import kr.co.preq.domain.preq.dto.OpenAIResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +41,8 @@ public class OpenAIService {
 	private String MEDIA_TYPE = "application/json; charset=UTF-8";
 	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 
-	public List<String> generateQuestions(CoverLetterRequestDto requestDto) {
-		String prompt = "질문: " + requestDto.getQuestion() + "\n답변: " + requestDto.getAnswer();
+	public List<String> generateQuestions(String question, String answer) {
+		String prompt = "질문: " + question + "\n답변: " + answer;
 		System.out.println(prompt);
 
 		OpenAIResponseDto response = this.getResponse(

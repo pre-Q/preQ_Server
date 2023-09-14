@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ApplicationRequestDto {
+public class KeywordAndSoftskillsRequestDto {
 	private String application;
 }
