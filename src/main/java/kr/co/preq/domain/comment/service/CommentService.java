@@ -2,8 +2,8 @@ package kr.co.preq.domain.comment.service;
 
 import kr.co.preq.domain.board.entity.Board;
 import kr.co.preq.domain.board.repository.BoardRepository;
-import kr.co.preq.domain.comment.dto.CommentCreateResponseDto;
-import kr.co.preq.domain.comment.dto.CommentRequestDto;
+import kr.co.preq.domain.comment.dto.response.CommentCreateResponseDto;
+import kr.co.preq.domain.comment.dto.request.CommentRequestDto;
 import kr.co.preq.domain.comment.entity.Comment;
 import kr.co.preq.domain.comment.repository.CommentRepository;
 import kr.co.preq.domain.member.entity.Member;

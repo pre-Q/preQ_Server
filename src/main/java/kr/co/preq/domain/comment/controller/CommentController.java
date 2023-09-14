@@ -1,8 +1,8 @@
 package kr.co.preq.domain.comment.controller;
 
 import kr.co.preq.domain.auth.service.AuthService;
-import kr.co.preq.domain.comment.dto.CommentCreateResponseDto;
-import kr.co.preq.domain.comment.dto.CommentRequestDto;
+import kr.co.preq.domain.comment.dto.response.CommentCreateResponseDto;
+import kr.co.preq.domain.comment.dto.request.CommentRequestDto;
 import kr.co.preq.domain.comment.service.CommentService;
 import kr.co.preq.domain.member.entity.Member;
 import kr.co.preq.global.common.util.response.ApiResponse;

@@ -2,10 +2,10 @@ package kr.co.preq.domain.auth.controller;
 
 import javax.validation.Valid;
 
-import kr.co.preq.domain.auth.dto.AuthRequestDto;
-import kr.co.preq.domain.auth.dto.AuthResponseDto;
-import kr.co.preq.domain.auth.dto.LogoutRequestDto;
-import kr.co.preq.domain.auth.dto.TokenRequestDto;
+import kr.co.preq.domain.auth.dto.request.AuthRequestDto;
+import kr.co.preq.domain.board.dto.response.response.AuthResponseDto;
+import kr.co.preq.domain.auth.dto.request.LogoutRequestDto;
+import kr.co.preq.domain.auth.dto.request.TokenRequestDto;
 import kr.co.preq.domain.auth.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

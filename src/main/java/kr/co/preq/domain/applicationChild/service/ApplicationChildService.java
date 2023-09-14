@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.preq.domain.application.entity.Application;
 import kr.co.preq.domain.application.repository.ApplicationRepository;
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildInfoResponseDto;
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildMapper;
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildRequestDto;
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildListResponseDto;
+import kr.co.preq.domain.applicationChild.dto.response.ApplicationChildInfoResponseDto;
+import kr.co.preq.domain.applicationChild.dto.response.ApplicationChildMapper;
+import kr.co.preq.domain.applicationChild.dto.request.ApplicationChildRequestDto;
+import kr.co.preq.domain.applicationChild.dto.response.ApplicationChildListResponseDto;
 import kr.co.preq.domain.applicationChild.entity.ApplicationChild;
 import kr.co.preq.domain.applicationChild.repository.ApplicationChildRepository;
 import kr.co.preq.domain.auth.service.AuthService;

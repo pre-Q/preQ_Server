@@ -1,16 +1,11 @@
 package kr.co.preq.domain.member.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.preq.domain.member.dto.MemberRequestDto;
-import kr.co.preq.domain.member.dto.MemberResponseDto;
+import kr.co.preq.domain.member.dto.response.MemberResponseDto;
 import kr.co.preq.domain.member.service.MemberService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;

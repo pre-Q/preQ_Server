@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.co.preq.domain.member.dto.MemberRequestDto;
+import kr.co.preq.domain.member.dto.request.MemberRequestDto;
 import kr.co.preq.global.common.util.exception.CustomException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;

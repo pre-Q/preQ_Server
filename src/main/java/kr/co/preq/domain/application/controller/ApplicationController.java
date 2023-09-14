@@ -1,8 +1,8 @@
 package kr.co.preq.domain.application.controller;
 
 import kr.co.preq.domain.application.dto.response.ApplicationListGetResponseDto;
-import kr.co.preq.domain.application.dto.ApplicationMemoUpdateRequestDto;
-import kr.co.preq.domain.application.dto.ApplicationTitleUpdateRequestDto;
+import kr.co.preq.domain.application.dto.request.ApplicationMemoUpdateRequestDto;
+import kr.co.preq.domain.application.dto.request.ApplicationTitleUpdateRequestDto;
 import kr.co.preq.domain.application.service.ApplicationService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;

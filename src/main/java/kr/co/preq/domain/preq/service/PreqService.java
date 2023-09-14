@@ -1,9 +1,10 @@
 package kr.co.preq.domain.preq.service;
 
-import kr.co.preq.domain.preq.dto.KeywordAndSoftskillsRequestDto;
-import kr.co.preq.domain.preq.dto.KeywordAndSoftskillsResponseDto;
+import kr.co.preq.domain.preq.dto.request.KeywordAndSoftskillsRequestDto;
+import kr.co.preq.domain.preq.dto.response.KeywordAndSoftskillsResponseDto;
 import kr.co.preq.domain.auth.service.AuthService;
-import kr.co.preq.domain.preq.dto.*;
+import kr.co.preq.domain.preq.dto.response.PreqAndKeywordResponseDto;
+import kr.co.preq.domain.preq.dto.response.PreqMapper;
 import kr.co.preq.domain.preq.entity.Preq;
 
 import org.springframework.beans.factory.annotation.Value;

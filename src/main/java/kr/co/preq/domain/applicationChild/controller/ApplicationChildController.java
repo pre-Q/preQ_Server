@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildInfoResponseDto;
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildRequestDto;
-import kr.co.preq.domain.applicationChild.dto.ApplicationChildListResponseDto;
+import kr.co.preq.domain.applicationChild.dto.response.ApplicationChildInfoResponseDto;
+import kr.co.preq.domain.applicationChild.dto.request.ApplicationChildRequestDto;
+import kr.co.preq.domain.applicationChild.dto.response.ApplicationChildListResponseDto;
 import kr.co.preq.domain.applicationChild.service.ApplicationChildService;
 import kr.co.preq.global.common.util.response.ApiResponse;
 import kr.co.preq.global.common.util.response.SuccessCode;
