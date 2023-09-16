@@ -58,18 +58,14 @@ public class ApplicationService {
 
     @Transactional
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
-        Member member = authService.findMember();
-        Application application = applicationRepository.findByIdAndMemberId(applicationId, member.getId())
-                .orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
+        Application application = getApplication(applicationId);
 
         application.updateTitle(requestDto.getTitle());
     }
 
     @Transactional
     public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
-        Member member = authService.findMember();
-        Application application = applicationRepository.findByIdAndMemberId(applicationId, member.getId())
-                .orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
+        Application application = getApplication(applicationId);
 
         application.updateMemo(requestDto.getMemo());
     }
