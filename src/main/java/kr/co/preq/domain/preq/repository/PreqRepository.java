@@ -7,5 +7,5 @@ import kr.co.preq.domain.preq.entity.Preq;
 import java.util.List;
 
 public interface PreqRepository extends JpaRepository<Preq, Long> {
-    List<Preq> findPreqsByApplicationChildId(Long achildId);
+    List<Preq> findPreqsByApplicationChildIdAndIsDeleted(Long applicationChildId, Boolean isDeleted);
 }
