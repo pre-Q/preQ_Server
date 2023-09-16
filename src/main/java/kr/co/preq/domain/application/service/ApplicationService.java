@@ -58,28 +58,35 @@ public class ApplicationService {
 
     @Transactional
     public void updateApplicationTitle(Long applicationId, ApplicationTitleUpdateRequestDto requestDto) {
-        Application application = getApplication(applicationId);
+        Member member = authService.findMember();
+        Long memberId = member.getId();
+        Application application = getApplication(applicationId, memberId);
 
         application.updateTitle(requestDto.getTitle());
     }
 
     @Transactional
     public void updateApplicationMemo(Long applicationId, ApplicationMemoUpdateRequestDto requestDto) {
-        Application application = getApplication(applicationId);
+        Member member = authService.findMember();
+        Long memberId = member.getId();
+        Application application = getApplication(applicationId, memberId);
 
         application.updateMemo(requestDto.getMemo());
     }
 
     @Transactional(readOnly = true)
     public ApplicationGetResponseDto getDetailApplication(Long applicationId) {
-        Application application = getApplication(applicationId);
+        Member member = authService.findMember();
+        Long memberId = member.getId();
+
+        Application application = getApplication(applicationId, memberId);
 
         List<ApplicationChildResponseDto> applicationChild = applicationChildRepository.findByApplicationId(applicationId).stream()
                 .map(aChild -> ApplicationChildResponseDto.of(aChild.getId(), aChild.getQuestion(), aChild.getAnswer()))
                 .collect(Collectors.toList());
 
         StringBuilder allAnswer = new StringBuilder();
-        for (ApplicationChild answer : applicationChildRepository.findByApplicationId(applicationId)) {
+        for (ApplicationChild answer : applicationChildRepository.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, memberId)) {
             allAnswer.append(answer.getAnswer());
         }
 
@@ -106,10 +113,7 @@ public class ApplicationService {
                 .build();
     }
 
-    private Application getApplication(Long applicationId) {
-        Member member = authService.findMember();
-        Long memberId = member.getId();
-
+    private Application getApplication(Long applicationId, Long memberId) {
         return applicationRepository.findByIdAndMemberId(applicationId, memberId)
                 .orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
     }
