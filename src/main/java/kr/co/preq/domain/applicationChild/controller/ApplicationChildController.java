@@ -29,7 +29,7 @@ public class ApplicationChildController {
 	@PostMapping("/{applicationId}/child")
 	public ApiResponse<Object> createApplicationChild(@PathVariable Long applicationId, @RequestBody @Valid ApplicationChildRequestDto requestDto) {
 		Long applicationChildId = applicationChildService.saveApplicationChild(applicationId, requestDto);
-		return ApiResponse.success(SuccessCode.APPLICATIONCHILD_CREATE_SUCCESS, applicationChildId);
+		return ApiResponse.success(SuccessCode.APPLICATION_CHILD_CREATE_SUCCESS, applicationChildId);
 	}
 
 	@GetMapping("/{applicationId}/child/list")
