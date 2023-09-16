@@ -21,6 +21,7 @@ public class ApplicationChildMapper {
 		ApplicationChildListResponseDto.ApplicationChildListResponseDtoBuilder cLetterResponseDto = ApplicationChildListResponseDto.builder();
 		cLetterResponseDto.id(applicationChild.getId());
 		cLetterResponseDto.question(applicationChild.getQuestion());
+		cLetterResponseDto.answer(applicationChild.getAnswer());
 
 		return cLetterResponseDto.build();
 	}

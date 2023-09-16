@@ -14,4 +14,5 @@ import lombok.Setter;
 public class ApplicationChildListResponseDto {
 	private Long id;
 	private String question;
+	private String answer;
 }
