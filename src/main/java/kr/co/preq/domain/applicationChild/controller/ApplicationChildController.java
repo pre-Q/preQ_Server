@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class ApplicationChildController {
 	@PostMapping("/{applicationId}/child")
 	public ApiResponse<Object> createApplicationChild(@PathVariable Long applicationId, @RequestBody @Valid ApplicationChildRequestDto requestDto) {
 		Long applicationChildId = applicationChildService.saveApplicationChild(applicationId, requestDto);
-		return ApiResponse.success(SuccessCode.APPLICATIONCHILD_CREATE_SUCCESS, applicationChildId);
+		return ApiResponse.success(SuccessCode.APPLICATION_CHILD_CREATE_SUCCESS, applicationChildId);
 	}
 
 	@GetMapping("/{applicationId}/child/list")
@@ -42,5 +43,12 @@ public class ApplicationChildController {
 	public ApiResponse<ApplicationChildInfoResponseDto> getApplicationChildInfo(@PathVariable Long applicationId, @PathVariable Long applicationChildId) {
 		ApplicationChildInfoResponseDto responseDtoList = applicationChildService.getApplicationChildInfo(applicationId, applicationChildId);
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, responseDtoList);
+	}
+
+	@DeleteMapping("/{applicationId}/child/{applicationChildId}")
+	public ApiResponse<Object> deleteApplication(@PathVariable Long applicationId, @PathVariable Long applicationChildId) {
+		Long deletedApplicationId = applicationChildService.deleteApplicationChild(applicationId, applicationChildId);
+
+		return ApiResponse.success(SuccessCode.APPLICATION_CHILD_DELETE_SUCCESS, deletedApplicationId);
 	}
 }

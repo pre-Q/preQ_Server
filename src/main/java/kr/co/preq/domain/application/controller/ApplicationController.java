@@ -57,4 +57,11 @@ public class ApplicationController {
 
         return ApiResponse.success(SuccessCode.APPLICATION_GET_SUCCESS, application);
     }
+
+    @DeleteMapping("/{applicationId}")
+    public ApiResponse<Object> deleteApplication(@PathVariable Long applicationId) {
+        Long deletedApplicationId = applicationService.deleteApplication(applicationId);
+
+        return ApiResponse.success(SuccessCode.APPLICATION_DELETE_SUCCESS, deletedApplicationId);
+    }
 }

@@ -51,7 +51,7 @@ public class ApplicationService {
         Member member = authService.findMember();
         Long memberId = member.getId();
 
-        return applicationRepository.findAllByMemberIdOrderByCreatedAt(memberId).stream()
+        return applicationRepository.findAllByMemberIdAndIsDeletedOrderByCreatedAt(memberId, false).stream()
                 .map(ApplicationListGetResponseDto::of)
                 .collect(Collectors.toList());
     }
@@ -81,12 +81,12 @@ public class ApplicationService {
 
         Application application = getApplication(applicationId, memberId);
 
-        List<ApplicationChildResponseDto> applicationChild = applicationChildRepository.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, memberId).stream()
+        List<ApplicationChildResponseDto> applicationChild = applicationChildRepository.findApplicationChildByApplicationIdAndMemberIdAndIsDeletedOrderByCreatedAt(applicationId, memberId, false).stream()
                 .map(aChild -> ApplicationChildResponseDto.of(aChild.getId(), aChild.getQuestion(), aChild.getAnswer()))
                 .collect(Collectors.toList());
 
         StringBuilder allAnswer = new StringBuilder();
-        for (ApplicationChild answer : applicationChildRepository.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, memberId)) {
+        for (ApplicationChild answer : applicationChildRepository.findApplicationChildByApplicationIdAndMemberIdAndIsDeletedOrderByCreatedAt(applicationId, memberId, false)) {
             allAnswer.append(answer.getAnswer());
         }
 
@@ -111,6 +111,17 @@ public class ApplicationService {
                 .keywordTop5(resultKeywords)
                 .softSkills(resultAbilities)
                 .build();
+    }
+
+    @Transactional
+    public Long deleteApplication(Long applicationId) {
+        Member member = authService.findMember();
+
+        Application application = getApplication(applicationId, member.getId());
+
+        application.softDelete();
+
+        return application.getId();
     }
 
     private Application getApplication(Long applicationId, Long memberId) {

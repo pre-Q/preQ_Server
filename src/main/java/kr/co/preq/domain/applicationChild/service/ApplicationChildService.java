@@ -60,7 +60,7 @@ public class ApplicationChildService {
 			.orElseThrow(() -> new BadRequestException(ErrorCode.NO_ID));
 
 		List<ApplicationChild> applicationChildren = applicationChildRepository
-			.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, member.getId());
+			.findApplicationChildByApplicationIdAndMemberIdAndIsDeletedOrderByCreatedAt(applicationId, member.getId(), false);
 
 		return applicationChildren.stream()
 			.map(applicationChildMapper::toResponseDto)
@@ -80,5 +80,18 @@ public class ApplicationChildService {
 		List<Preq> preqList = preqRepository.findPreqsByApplicationChildIdAndIsDeleted(applicationChildId, false);
 
 		return applicationChildMapper.toResponseDto(applicationChild, preqList);
+	}
+
+	@Transactional
+	public Long deleteApplicationChild(Long applicationId, Long applicationChildId) {
+		Member member = authService.findMember();
+
+		ApplicationChild applicationChild = applicationChildRepository.
+			findApplicationChildByIdAndApplicationIdAndMemberId(applicationChildId, applicationId, member.getId())
+			.orElseThrow(() -> new BadRequestException(ErrorCode.NO_ID));
+
+		applicationChild.softDelete();
+
+		return applicationChild.getId();
 	}
 }

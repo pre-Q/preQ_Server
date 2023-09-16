@@ -35,7 +35,8 @@ public enum SuccessCode {
 	COMMENT_DELETE_SUCCESS(OK, "댓글 삭제 성공"),
 
 	// 자기소개서
-	APPLICATIONCHILD_CREATE_SUCCESS(CREATED, "지원서 문항 생성 성공"),
+	APPLICATION_CHILD_CREATE_SUCCESS(CREATED, "지원서 문항 생성 성공"),
+	APPLICATION_CHILD_DELETE_SUCCESS(OK, "지원서 문항 삭제 성공"),
 	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공"),
 
 	// 지원서
@@ -43,7 +44,8 @@ public enum SuccessCode {
 	APPLICATION_LIST_GET_SUCCESS(OK, "지원서 리스트 조회 성공"),
 	APPLICATION_GET_SUCCESS(OK, "지원서 상세 조회 성공"),
 	APPLICATION_TITLE_UPDATE_SUCCESS(OK, "지원서 제목 수정 성공"),
-	APPLICATION_MEMO_UPDATE_SUCCESS(OK, "지원서 메모 수정 성공");
+	APPLICATION_MEMO_UPDATE_SUCCESS(OK, "지원서 메모 수정 성공"),
+	APPLICATION_DELETE_SUCCESS(OK, "지원서 삭제 성공");
 
 	private final HttpStatus status;
 	private final String message;

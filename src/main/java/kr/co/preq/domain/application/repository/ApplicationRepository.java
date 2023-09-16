@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
-    List<Application> findAllByMemberIdOrderByCreatedAt(Long memberId);
+    List<Application> findAllByMemberIdAndIsDeletedOrderByCreatedAt(Long memberId, Boolean isDeleted);
 	Optional<Application> findByIdAndMemberId(Long id, Long memberId);
 }
