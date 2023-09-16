@@ -36,6 +36,7 @@ public enum SuccessCode {
 
 	// 자기소개서
 	APPLICATION_CHILD_CREATE_SUCCESS(CREATED, "지원서 문항 생성 성공"),
+	APPLICATION_CHILD_DELETE_SUCCESS(OK, "지원서 문항 삭제 성공"),
 	PREQ_GET_SUCCESS(OK, "예상 면접 질문 조회 성공"),
 
 	// 지원서
