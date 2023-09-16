@@ -12,5 +12,5 @@ public interface ApplicationChildRepository extends JpaRepository<ApplicationChi
 
     List<ApplicationChild> findByApplicationId(Long applicationId);
 
-    List<ApplicationChild> findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(Long applicationId, Long memberId);
+    List<ApplicationChild> findApplicationChildByApplicationIdAndMemberIdAndIsDeletedOrderByCreatedAt(Long applicationId, Long memberId, Boolean isDeleted);
 }
