@@ -43,7 +43,8 @@ public enum SuccessCode {
 	APPLICATION_LIST_GET_SUCCESS(OK, "지원서 리스트 조회 성공"),
 	APPLICATION_GET_SUCCESS(OK, "지원서 상세 조회 성공"),
 	APPLICATION_TITLE_UPDATE_SUCCESS(OK, "지원서 제목 수정 성공"),
-	APPLICATION_MEMO_UPDATE_SUCCESS(OK, "지원서 메모 수정 성공");
+	APPLICATION_MEMO_UPDATE_SUCCESS(OK, "지원서 메모 수정 성공"),
+	APPLICATION_DELETE_SUCCESS(OK, "지원서 삭제 성공");
 
 	private final HttpStatus status;
 	private final String message;

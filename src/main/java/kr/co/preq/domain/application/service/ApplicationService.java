@@ -113,6 +113,17 @@ public class ApplicationService {
                 .build();
     }
 
+    @Transactional
+    public Long deleteApplication(Long applicationId) {
+        Member member = authService.findMember();
+
+        Application application = getApplication(applicationId, member.getId());
+
+        application.softDelete();
+
+        return application.getId();
+    }
+
     private Application getApplication(Long applicationId, Long memberId) {
         return applicationRepository.findByIdAndMemberId(applicationId, memberId)
                 .orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
