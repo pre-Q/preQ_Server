@@ -60,7 +60,7 @@ public class ApplicationChildService {
 			.orElseThrow(() -> new BadRequestException(ErrorCode.NO_ID));
 
 		List<ApplicationChild> applicationChildren = applicationChildRepository
-			.findApplicationChildByApplicationIdAndMemberId(applicationId, member.getId());
+			.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, member.getId());
 
 		return applicationChildren.stream()
 			.map(applicationChildMapper::toResponseDto)
