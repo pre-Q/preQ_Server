@@ -60,7 +60,7 @@ public class ApplicationChildService {
 			.orElseThrow(() -> new BadRequestException(ErrorCode.NO_ID));
 
 		List<ApplicationChild> applicationChildren = applicationChildRepository
-			.findApplicationChildByApplicationIdAndMemberId(applicationId, member.getId());
+			.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, member.getId());
 
 		return applicationChildren.stream()
 			.map(applicationChildMapper::toResponseDto)
@@ -77,7 +77,7 @@ public class ApplicationChildService {
 
 		if (!member.equals(applicationChild.getMember())) throw new CustomException(ErrorCode.NOT_AUTHORIZED);
 
-		List<Preq> preqList = preqRepository.findPreqsByApplicationChildId(applicationChildId);
+		List<Preq> preqList = preqRepository.findPreqsByApplicationChildIdAndIsDeleted(applicationChildId, false);
 
 		return applicationChildMapper.toResponseDto(applicationChild, preqList);
 	}

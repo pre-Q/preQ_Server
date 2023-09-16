@@ -51,7 +51,7 @@ public class ApplicationService {
         Member member = authService.findMember();
         Long memberId = member.getId();
 
-        return applicationRepository.findAllByMemberId(memberId).stream()
+        return applicationRepository.findAllByMemberIdOrderByCreatedAt(memberId).stream()
                 .map(ApplicationListGetResponseDto::of)
                 .collect(Collectors.toList());
     }

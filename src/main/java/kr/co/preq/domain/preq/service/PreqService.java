@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import kr.co.preq.domain.applicationChild.entity.ApplicationChild;
 import kr.co.preq.domain.applicationChild.repository.ApplicationChildRepository;
 import kr.co.preq.domain.preq.repository.PreqRepository;
+import kr.co.preq.global.common.entity.BaseEntity;
 import kr.co.preq.global.common.util.exception.BadRequestException;
 import kr.co.preq.global.common.util.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,12 @@ public class PreqService {
 				cutQuestions.add(q);
 			}
 		});
+
+		// soft delete old preQuestions
+		List<Preq> oldPreqList = preqRepository.findPreqsByApplicationChildIdAndIsDeleted(applicationChildId, false);
+		if (!oldPreqList.isEmpty()) {
+			oldPreqList.forEach(BaseEntity::softDelete);
+		}
 
 		// insert generated preQuestions into DB
 		cutQuestions.forEach(q -> {
