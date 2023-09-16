@@ -81,7 +81,7 @@ public class ApplicationService {
 
         Application application = getApplication(applicationId, memberId);
 
-        List<ApplicationChildResponseDto> applicationChild = applicationChildRepository.findByApplicationId(applicationId).stream()
+        List<ApplicationChildResponseDto> applicationChild = applicationChildRepository.findApplicationChildByApplicationIdAndMemberIdOrderByCreatedAt(applicationId, memberId).stream()
                 .map(aChild -> ApplicationChildResponseDto.of(aChild.getId(), aChild.getQuestion(), aChild.getAnswer()))
                 .collect(Collectors.toList());
 
