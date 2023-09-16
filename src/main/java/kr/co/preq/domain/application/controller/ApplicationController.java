@@ -1,5 +1,6 @@
 package kr.co.preq.domain.application.controller;
 
+import kr.co.preq.domain.application.dto.response.ApplicationGetResponseDto;
 import kr.co.preq.domain.application.dto.response.ApplicationListGetResponseDto;
 import kr.co.preq.domain.application.dto.request.ApplicationMemoUpdateRequestDto;
 import kr.co.preq.domain.application.dto.request.ApplicationTitleUpdateRequestDto;
@@ -48,5 +49,12 @@ public class ApplicationController {
         applicationService.updateApplicationMemo(applicationId, requestDto);
         
         return ApiResponse.success(SuccessCode.APPLICATION_MEMO_UPDATE_SUCCESS);
+    }
+
+    @GetMapping("/{applicationId}")
+    public ApiResponse<ApplicationGetResponseDto> getDetailApplication(@PathVariable Long applicationId) {
+        ApplicationGetResponseDto application = applicationService.getDetailApplication(applicationId);
+
+        return ApiResponse.success(SuccessCode.APPLICATION_GET_SUCCESS, application);
     }
 }
