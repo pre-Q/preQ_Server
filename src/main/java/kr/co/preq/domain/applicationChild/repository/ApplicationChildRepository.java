@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ApplicationChildRepository extends JpaRepository<ApplicationChild, Long> {
     Optional<ApplicationChild> findApplicationChildByIdAndApplicationIdAndMemberId(Long id, Long applicationId, Long memberId);
     List<ApplicationChild> findApplicationChildByApplicationIdAndMemberId(Long applicationId, Long memberId);
+    List<ApplicationChild> findByApplicationId(Long applicationId);
 }

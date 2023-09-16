@@ -16,4 +16,8 @@ public class ApplicationChildResponseDto {
 	private Long applicationChildId;
 	private String question;
 	private String answer;
+
+	public static ApplicationChildResponseDto of(Long applicationChildId, String question, String answer) {
+		return new ApplicationChildResponseDto(applicationChildId, question, answer);
+	}
 }

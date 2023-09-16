@@ -35,13 +35,9 @@ public class PreqService {
 	private final PreqRepository preqRepository;
 	private final ApplicationChildRepository applicationChildRepository;
 	private final OpenAIService openAIService;
-	private final AuthService authService;
 	private final PreqMapper preqMapper;
 
 	@Value("${flask.url}") private String FLASK_URL;
-
-
-
 
 	@Transactional
 	public PreqAndKeywordResponseDto createPreqAndKeyword(Long applicationChildId) {
@@ -85,7 +81,7 @@ public class PreqService {
 		return preqMapper.toResponseDto(cutQuestions, keywordAndSoftskillsInfo);
 	}
 
-	private KeywordAndSoftskillsResponseDto sendRequestToFlask(KeywordAndSoftskillsRequestDto requestDto) {
+	public KeywordAndSoftskillsResponseDto sendRequestToFlask(KeywordAndSoftskillsRequestDto requestDto) {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-type", "application/json; charset=UTF-8");
@@ -102,5 +98,4 @@ public class PreqService {
 			throw new RuntimeException(e);
 		}
 	}
-
 }
