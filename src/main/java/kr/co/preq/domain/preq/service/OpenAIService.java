@@ -46,13 +46,16 @@ public class OpenAIService {
 
 	public List<String> generateQuestions(String question, String answer, List<SessionDto> sessionDtoList) {
 		List<Message> sessions = new ArrayList<>();
-		sessionDtoList.forEach((a) -> {
-			sessions.add(new Message("user", makeUserPrompt(a.getQuestion(), a.getAnswer())));
-			sessions.add(new Message("assistant", a.getPreqList().toString()));
+
+		for (int i = 0; i < sessionDtoList.size() - 1; i++) {
+			sessions.add(new Message("user", makeUserPrompt(sessionDtoList.get(i).getQuestion(),
+				sessionDtoList.get(i).getAnswer())));
+			sessions.add(new Message("assistant", sessionDtoList.get(i+1).getQuestion()));
 			System.out.println("session--------");
-			System.out.println(makeUserPrompt(a.getQuestion(), a.getAnswer()));
-			System.out.println(a.getPreqList().toString());
-		});
+			System.out.println(makeUserPrompt(sessionDtoList.get(i).getQuestion(),
+				sessionDtoList.get(i).getAnswer()));
+			System.out.println(sessionDtoList.get(i+1).getQuestion());
+		}
 
 		String prompt = makeUserPrompt(question, answer);
 		System.out.println("new---------");
