@@ -49,6 +49,16 @@ public class ApplicationChildService {
 
 		applicationChildRepository.save(applicationChild);
 
+		if (requestDto.getParentId() != 0) {
+			ApplicationChild parent = applicationChildRepository
+				.findApplicationChildByIdAndApplicationIdAndMemberId(requestDto.getParentId(), applicationId, member.getId())
+				.orElseThrow(() -> new BadRequestException(ErrorCode.BAD_PARAMETER));
+
+			if (!parent.isDeleted()) {
+				applicationChild.setParent(parent);
+			}
+		}
+
 		return applicationChild.getId();
 	}
 

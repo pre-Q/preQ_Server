@@ -1,5 +1,6 @@
 package kr.co.preq.domain.preq.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,8 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import kr.co.preq.domain.preq.dto.SessionDto;
+import kr.co.preq.domain.preq.dto.Message;
 import kr.co.preq.domain.preq.dto.request.OpenAIRequestDto;
 import kr.co.preq.domain.preq.dto.response.OpenAIResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +44,18 @@ public class OpenAIService {
 	private String MEDIA_TYPE = "application/json; charset=UTF-8";
 	RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 
-	public List<String> generateQuestions(String question, String answer) {
-		String prompt = "질문: " + question + "\n답변: " + answer;
+	public List<String> generateQuestions(String question, String answer, List<SessionDto> sessionDtoList) {
+		List<Message> sessions = new ArrayList<>();
+		sessionDtoList.forEach((a) -> {
+			sessions.add(new Message("user", makeUserPrompt(a.getQuestion(), a.getAnswer())));
+			sessions.add(new Message("assistant", a.getPreqList().toString()));
+			System.out.println("session--------");
+			System.out.println(makeUserPrompt(a.getQuestion(), a.getAnswer()));
+			System.out.println(a.getPreqList().toString());
+		});
+
+		String prompt = makeUserPrompt(question, answer);
+		System.out.println("new---------");
 		System.out.println(prompt);
 
 		OpenAIResponseDto response = this.getResponse(
@@ -51,6 +64,7 @@ public class OpenAIService {
 					MODEL,
 					N,
 					COMMAND,
+					sessions,
 					prompt
 				)
 			)
@@ -75,5 +89,9 @@ public class OpenAIService {
 			OpenAIResponseDto.class);
 
 		return responseEntity.getBody();
+	}
+
+	private String makeUserPrompt(String question, String answer) {
+		return "질문: " + question + "\n답변: " + answer;
 	}
 }

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "applicationChild")
@@ -44,6 +46,11 @@ public class ApplicationChild extends BaseEntity {
 	@Column
 	@Convert(converter = StringListConverter.class)
 	private List<String> abilities;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id")
+	@Setter
+	private ApplicationChild parent;
 
 	@Builder
 	public ApplicationChild(Application application, Member member, String question, String answer) {
