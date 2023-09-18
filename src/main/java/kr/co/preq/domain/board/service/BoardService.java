@@ -85,7 +85,7 @@ public class BoardService {
         board.updateViews(views);
 
         List<CommentResponseDto> results = new ArrayList<>();
-        List<Comment> comments = commentRepository.findByBoardId(boardId);
+        List<Comment> comments = commentRepository.findByBoardIdOrderByCreatedAt(boardId);
 
         comments.forEach(comment -> {
             results.add(CommentResponseDto.of(comment.getId(), comment.getMember().getName(), comment.getContent()));
