@@ -20,7 +20,7 @@ public interface ApplicationChildRepository extends JpaRepository<ApplicationChi
         + "  select *, 1 as DEPTH\n"
         + "  from application_child\n"
         + "  where 1=1\n"
-        + "  and id = 77\n"
+        + "  and id = ?1\n"
         + "\n"
         + "  union\n"
         + "  select d.*, fd.DEPTH+1\n"
