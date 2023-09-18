@@ -51,7 +51,7 @@ public class PreqService {
 			.findAllByApplicationChildIdOrderByParentIdAscNullsFirstCategoryIdAsc(applicationChildId);
 
 		List<SessionDto> parentApplicationChilds = allApplicationChilds
-			.subList(0, allApplicationChilds.size()-1)	// remove first element (=self)
+			// .subList(0, allApplicationChilds.size()-1)	// remove first element (=self)
 			.stream().map((a) -> {
 				List<Preq> preqList = preqRepository.findPreqsByApplicationChildIdAndIsDeleted(a.getId(), false);
 				return new SessionDto(a.getQuestion(), a.getAnswer(), preqList.stream().map((p) -> p.getQuestion()).collect(
@@ -64,13 +64,14 @@ public class PreqService {
 		// manufacturing chatGPT response
 		List<String> cutQuestions = new ArrayList<>();
 		questions.forEach(q -> {
-			if (q.contains(": ")) {
-				String[] str = q.split(": ");
-				cutQuestions.add(str[1]);
-			} else {
-				cutQuestions.add(q);
+				if (q.contains(": ")) {
+					String[] str = q.split(": ");
+					cutQuestions.add(str[1].replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9,.? ]", ""));
+				} else {
+					cutQuestions.add(q.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9,.? ]", ""));
+				}
 			}
-		});
+		);
 
 		// soft delete old preQuestions
 		List<Preq> oldPreqList = preqRepository.findPreqsByApplicationChildIdAndIsDeleted(applicationChildId, false);
