@@ -1,8 +1,9 @@
 package kr.co.preq.domain.preq.service;
 
+import kr.co.preq.domain.preq.dto.SessionDto;
+import kr.co.preq.domain.preq.dto.Message;
 import kr.co.preq.domain.preq.dto.request.KeywordAndSoftskillsRequestDto;
 import kr.co.preq.domain.preq.dto.response.KeywordAndSoftskillsResponseDto;
-import kr.co.preq.domain.auth.service.AuthService;
 import kr.co.preq.domain.preq.dto.response.PreqAndKeywordResponseDto;
 import kr.co.preq.domain.preq.dto.response.PreqMapper;
 import kr.co.preq.domain.preq.entity.Preq;
@@ -46,8 +47,19 @@ public class PreqService {
 		ApplicationChild applicationChild = applicationChildRepository.findById(applicationChildId)
 			.orElseThrow(() -> new BadRequestException(ErrorCode.NO_ID));
 
+		List<ApplicationChild> allApplicationChilds = applicationChildRepository
+			.findAllByApplicationChildIdOrderByParentIdAscNullsFirstCategoryIdAsc(applicationChildId);
+
+		List<SessionDto> parentApplicationChilds = allApplicationChilds
+			.subList(0, allApplicationChilds.size()-1)	// remove first element (=self)
+			.stream().map((a) -> {
+				List<Preq> preqList = preqRepository.findPreqsByApplicationChildIdAndIsDeleted(a.getId(), false);
+				return new SessionDto(a.getQuestion(), a.getAnswer(), preqList.stream().map((p) -> p.getQuestion()).collect(
+					Collectors.toList()));
+			}).collect(Collectors.toList());
+
 		// generate preQuestions
-		List<String> questions = openAIService.generateQuestions(applicationChild.getQuestion(), applicationChild.getAnswer());
+		List<String> questions = openAIService.generateQuestions(applicationChild.getQuestion(), applicationChild.getAnswer(), parentApplicationChilds);
 
 		// manufacturing chatGPT response
 		List<String> cutQuestions = new ArrayList<>();
